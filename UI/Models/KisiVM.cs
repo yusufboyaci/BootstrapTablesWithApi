@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UI.Models
 {
-    public class KisiVM
+    public class KisiVM : BaseVM
     {
         [MaxLength(50)]
         public string Ad { get; set; }

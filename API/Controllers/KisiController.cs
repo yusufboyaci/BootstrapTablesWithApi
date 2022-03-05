@@ -21,7 +21,7 @@ namespace API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Json(db.Kisiler.Where(x => x.IsActive == true));
+            return Json(db.Kisiler.Where(x => x.IsActive == true).ToList());
         }
 
         // GET api/<KisiController>/5
@@ -35,6 +35,7 @@ namespace API.Controllers
         [HttpPost]
         public void Post(Kisi nesne)
         {
+            nesne.IsActive = true;
             db.Kisiler.Add(nesne);
         }
 

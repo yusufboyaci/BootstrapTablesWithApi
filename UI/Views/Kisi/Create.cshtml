@@ -1,0 +1,68 @@
+﻿@model UI.Models.KisiVM
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>KisiVM</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form id="form"
+              ata-toggle="form"
+              data-ajax="Add"
+              data-url="https://localhost:44353/api/Kisi"
+              asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Ad" class="control-label"></label>
+                <input asp-for="Ad" class="form-control" />
+                <span asp-validation-for="Ad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Soyad" class="control-label"></label>
+                <input asp-for="Soyad" class="form-control" />
+                <span asp-validation-for="Soyad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Yas" class="control-label"></label>
+                <input asp-for="Yas" class="form-control" />
+                <span asp-validation-for="Yas" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" onclick="Add()" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<script>
+
+  
+
+    function Add() {
+        var frm = $("#form")
+        var _data = JSON.stringify(frm.serializeJSON())
+        $.ajax({
+            url: 'https://localhost:44353/api/Kisi',
+            type: 'POST',
+            data: _data,
+            contentType: 'application/json; charset-utf-8',
+            dataType: 'json',
+            success: function (result) {
+                console.log(result);
+                alert("Ekleme başarılı");
+            },
+            error: function (err) {
+                console.log(err);
+                alert("HATA");
+            }
+        })
+    }
+</script>

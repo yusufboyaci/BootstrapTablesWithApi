@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UI.Models
 {
-    public class AdresDefteriVM
+    public class AdresDefteriVM : BaseVM
     {
         [MaxLength(250)]
         public string Adres { get; set; }

@@ -31,7 +31,7 @@ namespace API
 
             services.AddControllers();
             services.AddDbContext<AppDbContext>(o => o.UseSqlServer("server=.;database=BootstraptTablesWithApiDb;uid=yusuf;pwd=123"));
-            services.AddCors();
+            services.AddCors();//Cors hatasý alamamk için eklenir.
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
@@ -49,7 +49,7 @@ namespace API
             }
 
             app.UseHttpsRedirection();
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());//Cors hatasý alamamk için eklenir.
 
             app.UseRouting();
 
