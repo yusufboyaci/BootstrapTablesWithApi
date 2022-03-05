@@ -1,0 +1,86 @@
+﻿@model IEnumerable<UI.Models.KisiVM>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+@*<table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Ad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Soyad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Yas)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.KisiId)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Soyad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Yas)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KisiId)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>*@
+
+
+<table id="table"
+       data-toggle="table"
+       data-ajax="ajaxRequest"     @*AJAX için kullanılacak olan Fonksiyon adı dır.*@
+       data-url="https://localhost:44353/api/Kisi"
+       data-side-pagination="server"
+       data-pagination="true"
+       data-search="true">
+    <thead>
+        <tr>
+            <th data-sortable="true" data-field="Ad">Ad</th>
+            <th data-field="Soyad">Soyad</th>
+            <th data-field="Yas">Yas</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            @*<td>1</td>
+            <td>Item 1</td>
+            <td>$1</td>*@
+        </tr>
+    </tbody>
+</table>
+<script>
+    function ajaxRequest(result) {
+        var url = "https://localhost:44353/api/Kisi";
+        $.get(url + '?' + $.param(result.data)).then(function (item) {
+
+            result.success(item);
+        });
+    }
+</script>

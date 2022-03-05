@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "bootstrap-table@1.19.1",
+      "destination": "wwwroot/bootstrap-table/"
+    },
+    {
+      "library": "font-awesome@6.0.0",
+      "destination": "wwwroot/font-awesome/"
+    }
+  ]
+}
