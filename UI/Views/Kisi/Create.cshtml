@@ -13,25 +13,24 @@
         <form id="form"
               
               asp-action="Create">
-            @*<input  asp-for="Id" hidden class="form-control" value="@Model.Id" />*@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Ad" class="control-label"></label>
-                <input name="Ad" asp-for="Ad" class="form-control" />
+                <input name="ad" asp-for="Ad" class="form-control" />
                 <span asp-validation-for="Ad" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Soyad" class="control-label"></label>
-                <input name="Soyad" asp-for="Soyad" class="form-control" />
+                <input name="soyad" asp-for="Soyad" class="form-control" />
                 <span asp-validation-for="Soyad" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Yas" class="control-label"></label>
-                <input name="Yas" asp-for="Yas" class="form-control" />
+                <input name="yas" asp-for="Yas" class="form-control" />
                 <span asp-validation-for="Yas" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" onclick="Add()" value="Create" class="btn btn-primary" />
+                <input id="btnEkle" type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -43,31 +42,35 @@
 
 <script>
 
-  
+    $(document).ready(function () {
+        $("#btnEkle").click(function () {
+            Add();
+        });
+
+    });
 
     function Add(event) {
-       // event.preventDefault();
+      // 
         var frm = $("#form");
         var _data = JSON.stringify(frm.serializeJSON());
     
         $.ajax({
-            url: 'https://localhost:44353/api/Kisi',
+            url: 'https://localhost:44353/api/Kisi/Post',
             type: 'POST',
             data: _data,
-            contentType: 'application/json; charset-utf-8',
+            contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (result) {
                 console.log(result);
                 alert("Ekleme başarılı");
-                window.location.href = "/Index";
+                window.location.href = "https://localhost:44368/Kisi/Index";
             },
             error: function (err) {
                 console.log(err);
                 alert("HATA");
             }
-        })
+        });
+        //event.preventDefault();
     }
-
-
 
 </script>

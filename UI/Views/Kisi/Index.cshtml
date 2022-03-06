@@ -14,13 +14,18 @@
 
 <table id="table"
        data-toggle="table"
-       data-ajax="ajaxRequest"     @*AJAX için kullanılacak olan Fonksiyon adı dır.*@
+       data-show-columns="true"
+       data-multiple-select-row="true"
+       data-click-to-select="true"
+       data-pagination="true"
+       data-search="true"
+       data-ajax="ajaxRequest" @*AJAX için kullanılacak olan Fonksiyon adı dır.*@
        data-url="https://localhost:44353/api/Kisi/GET"
        data-side-pagination="server"
-       data-pagination="true"
-       data-search="true">
+       data-buttons="buttons">
     <thead>
         <tr>
+            <th id="chk" data-field="state" data-checkbox="true"></th>
             <th data-sortable="true" data-field="ad">Ad</th>
             <th data-field="soyad">Soyad</th>
             <th data-field="yas">Yas</th>
@@ -28,20 +33,67 @@
     </thead>
     <tbody>
         <tr>
-            @*<td>1</td>
-            <td>Item 1</td>
-            <td>$1</td>*@
         </tr>
     </tbody>
 </table>
 <script>
+    //function buttons() {
+    //    return {
+    //        btnUsersAdd: {
+    //            text: 'Delete',
+    //            icon: 'fa fa-trash',
+    //            event: function (id) {
+    //                if ($('#chk').val() === true) {
+    //                    Delete(id);
+    //                } 
+                   
+    //            }
+    //        }
+    //    }
+    //}
+
+
+    function buttons() {
+        return {
+            btnUsersAdd: {
+                'text': 'Delete',
+                'icon': 'fa fa-trash',
+                'event': {
+                    'click': () => {
+                        if ($('#chk').val() == true) {
+                            Delete(id);
+                        }
+                }
+
+                }
+            }
+        }
+    }
+
+
+
+
     function ajaxRequest(result) {
         var url = "https://localhost:44353/api/Kisi/GET";
         $.get(url + '?' + $.param(result.data)).then(function (item) {
 
             result.success(item);
+        });
+    }
+    function Delete(id) {
+        $.ajax({
+            url: "https://localhost:44353/api/Kisi/Delete/" + id,
+            type: 'DELETE',
+            data: { id, id },
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                alert("Silme Başarılı!");
+                window.location.href = 'https://localhost:44368/Kisi';
+            },
+            error: function (err) {
+                alert("Hata");
+            }
+
         })
-
-
     }
 </script>

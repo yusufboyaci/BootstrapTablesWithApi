@@ -25,24 +25,22 @@ namespace API.Controllers
             return Json(kisiler);
         }
 
-        // GET api/<KisiController>/5
+     
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             return Json(db.Kisiler.Find(id));
         }
 
-        // POST api/<KisiController>
-        [HttpPost]
+        [HttpPost("Post")]
         public void Post(Kisi nesne)
         {
-            nesne.Id = 1;
             nesne.IsActive = true;
             db.Kisiler.Add(nesne);
             db.SaveChanges();
         }
 
-        // PUT api/<KisiController>/5
+       
         [HttpPut("{id}")]
         public void Put(int id)
         {
@@ -50,8 +48,7 @@ namespace API.Controllers
             db.SaveChanges();
         }
 
-        // DELETE api/<KisiController>/5
-        [HttpDelete("{id}")]
+        [HttpDelete("Delete/{id}")]
         public void Delete(int id)
         {
             Kisi nesne = db.Kisiler.Find(id);
