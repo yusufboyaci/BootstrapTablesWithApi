@@ -1,4 +1,4 @@
-﻿@model IEnumerable<UI.Models.KisiVM>
+﻿@model IEnumerable<KisiVM>
 
 @{
     ViewData["Title"] = "Index";
@@ -15,15 +15,15 @@
 <table id="table"
        data-toggle="table"
        data-ajax="ajaxRequest"     @*AJAX için kullanılacak olan Fonksiyon adı dır.*@
-       data-url="https://localhost:44353/api/Kisi"
+       data-url="https://localhost:44353/api/Kisi/GET"
        data-side-pagination="server"
        data-pagination="true"
        data-search="true">
     <thead>
         <tr>
-            <th data-sortable="true" data-field="Ad">Ad</th>
-            <th data-field="Soyad">Soyad</th>
-            <th data-field="Yas">Yas</th>
+            <th data-sortable="true" data-field="ad">Ad</th>
+            <th data-field="soyad">Soyad</th>
+            <th data-field="yas">Yas</th>
         </tr>
     </thead>
     <tbody>
@@ -36,10 +36,12 @@
 </table>
 <script>
     function ajaxRequest(result) {
-        var url = "https://localhost:44353/api/Kisi";
+        var url = "https://localhost:44353/api/Kisi/GET";
         $.get(url + '?' + $.param(result.data)).then(function (item) {
 
             result.success(item);
-        });
+        })
+
+
     }
 </script>

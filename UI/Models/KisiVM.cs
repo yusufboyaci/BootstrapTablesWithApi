@@ -8,6 +8,7 @@ namespace UI.Models
 {
     public class KisiVM : BaseVM
     {
+
         [MaxLength(50)]
         public string Ad { get; set; }
         [MaxLength(50)]

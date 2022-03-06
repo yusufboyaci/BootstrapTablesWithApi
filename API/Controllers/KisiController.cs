@@ -18,10 +18,11 @@ namespace API.Controllers
             db = context;
         }
         // GET: api/<KisiController>
-        [HttpGet]
+        [HttpGet("Get")]
         public IActionResult Get()
         {
-            return Json(db.Kisiler.Where(x => x.IsActive == true).ToList());
+            List<Kisi> kisiler = db.Kisiler.Where(x => x.IsActive == true).ToList();
+            return Json(kisiler);
         }
 
         // GET api/<KisiController>/5
@@ -35,8 +36,10 @@ namespace API.Controllers
         [HttpPost]
         public void Post(Kisi nesne)
         {
+            nesne.Id = 1;
             nesne.IsActive = true;
             db.Kisiler.Add(nesne);
+            db.SaveChanges();
         }
 
         // PUT api/<KisiController>/5
@@ -44,6 +47,7 @@ namespace API.Controllers
         public void Put(int id)
         {
             db.Kisiler.Update(db.Kisiler.Find(id));
+            db.SaveChanges();
         }
 
         // DELETE api/<KisiController>/5
@@ -53,6 +57,7 @@ namespace API.Controllers
             Kisi nesne = db.Kisiler.Find(id);
             nesne.IsActive = false;
             db.Kisiler.Update(nesne);
+            db.SaveChanges();
         }
     }
 }
