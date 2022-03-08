@@ -18,41 +18,40 @@ namespace API.Controllers
         {
             db = context;
         }
-        // GET: api/<AdresDefteriController>
-        [HttpGet]
+        [HttpGet("Get")]
         public IActionResult Get()
         {
             return Json(db.AdresDefterleri.Where(x => x.IsActive == true).ToList());
         }
 
-        // GET api/<AdresDefteriController>/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             return Json(db.AdresDefterleri.Find(id));
         }
 
-        // POST api/<AdresDefteriController>
-        [HttpPost]
+        [HttpPost("Post")]
         public void Post(AdresDefteri nesne)
         {
+            nesne.IsActive = true;
             db.AdresDefterleri.Add(nesne);
+            db.SaveChanges();
         }
 
-        // PUT api/<AdresDefteriController>/5
         [HttpPut("{id}")]
         public void Put(int id)
         {
             db.AdresDefterleri.Update(db.AdresDefterleri.Find(id));
+            db.SaveChanges();
         }
 
-        // DELETE api/<AdresDefteriController>/5
-        [HttpDelete("{id}")]
+        [HttpDelete("Delete/{id}")]
         public void Delete(int id)
         {
             AdresDefteri nesne = db.AdresDefterleri.Find(id);
             nesne.IsActive = false;
             db.AdresDefterleri.Update(nesne);
+            db.SaveChanges();
         }
     }
 }

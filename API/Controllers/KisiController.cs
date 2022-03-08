@@ -17,7 +17,6 @@ namespace API.Controllers
         {
             db = context;
         }
-        // GET: api/<KisiController>
         [HttpGet("Get")]
         public IActionResult Get()
         {
@@ -31,7 +30,6 @@ namespace API.Controllers
         {
             return Json(db.Kisiler.Find(id));
         }
-        //[ValidateAntiForgeryToken]
         [HttpPost("Post")]
         public void Post(Kisi nesne)
         {
