@@ -10,7 +10,9 @@
     <a asp-action="Create">Create New</a>
 </p>
 
-
+<div id="toolbar">
+    <button id="delete" class="btn btn-danger">Sil</button>
+</div>
 
 <table id="table"
        data-toggle="table"
@@ -37,53 +39,36 @@
     </tbody>
 </table>
 <script>
-    //function buttons() {
-    //    return {
-    //        btnUsersAdd: {
-    //            text: 'Delete',
-    //            icon: 'fa fa-trash',
-    //            event: function (id) {
-    //                if ($('#chk').val() === true) {
-    //                    Delete(id);
-    //                } 
-                   
-    //            }
-    //        }
-    //    }
-    //}
+
+    var tablo = $('#table');
+    $('#delete').click(function () {
+        var ids = $.map(tablo.bootstrapTable('getSelections'), function (row) {
+            console.log(row.id);
+            Delete(row.id);
+            return row.id;
+        });
+        tablo.bootstrapTable('remove', {
+            field: 'id',
+            values: ids
+        });      
+    });
 
 
-    function buttons() {
-        return {
-            btnUsersAdd: {
-                'text': 'Delete',
-                'icon': 'fa fa-trash',
-                'event': {
-                    'click': () => {
-                        if ($('#chk').val() == true) {
-                            Delete(id);
-                        }
-                }
-
-                }
-            }
-        }
-    }
-
-
-
-
-    function ajaxRequest(result) {
+    function ajaxRequest(value) {
         var url = "https://localhost:44353/api/Kisi/GET";
-        $.get(url + '?' + $.param(result.data)).then(function (item) {
+        $.get(url + '?' + $.param(value.data)).then(function (result) {
+            console.log(result.length);
+            console.log(result);
 
-            result.success(item);
+            value.success(result);
+
         });
     }
     function Delete(id) {
         $.ajax({
             url: "https://localhost:44353/api/Kisi/Delete/" + id,
             type: 'DELETE',
+            dataType: 'json',
             data: { id, id },
             contentType: 'application/json; charset=utf-8',
             success: function (result) {

@@ -10,9 +10,8 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form id="form"
-              
-              asp-action="Create">
+        <form id="form">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Ad" class="control-label"></label>
@@ -50,7 +49,7 @@
     });
 
     function Add(event) {
-      // 
+        debugger;
         var frm = $("#form");
         var _data = JSON.stringify(frm.serializeJSON());
     
@@ -63,14 +62,15 @@
             success: function (result) {
                 console.log(result);
                 alert("Ekleme başarılı");
-                window.location.href = "https://localhost:44368/Kisi/Index";
+                
+                window.location.href = "/Kisi/Index";
+               // window.location.reload();
             },
             error: function (err) {
                 console.log(err);
                 alert("HATA");
             }
         });
-        //event.preventDefault();
     }
 
 </script>
