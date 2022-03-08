@@ -63,13 +63,13 @@
             value.success(result);
 
         });
-    }
+    };
     function Delete(id) {
         $.ajax({
             url: "https://localhost:44353/api/Kisi/Delete/" + id,
             type: 'DELETE',
             dataType: 'json',
-            data: { id, id },
+            data: { id: id },
             contentType: 'application/json; charset=utf-8',
             success: function (result) {
                 alert("Silme Başarılı!");
@@ -79,6 +79,6 @@
                 alert("Hata");
             }
 
-        })
-    }
+        });
+    };
 </script>

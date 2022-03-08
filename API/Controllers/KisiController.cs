@@ -39,7 +39,7 @@ namespace API.Controllers
         }
 
        
-        [HttpPut("{id}")]
+        [HttpPut("Put/{id}")]
         public void Put(int id)
         {
             db.Kisiler.Update(db.Kisiler.Find(id));
