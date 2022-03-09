@@ -47,16 +47,5 @@
 
 
 
-    function Update(id) {
-        var frm = $('#form');
-        //var _data = JSON.stringify(frm.serializeJSON());
-        $.ajax({
-            url: 'https://localhost:44353/api/Kisi/Put' + id,
-            type: 'PUT',
-            dataType: 'json',
-            data: { id: id },
-            contentType:'applica'
-        });
-    }
 
 </script>

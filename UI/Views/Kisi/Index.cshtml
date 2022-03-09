@@ -12,23 +12,22 @@
 
 <div id="toolbar">
     <button id="delete" class="btn btn-danger">Sil</button>
+    <button id="update" class="btn btn-info">Güncelle</button>
 </div>
 
 <table id="table"
        data-toggle="table"
        data-show-columns="true"
-       data-multiple-select-row="true"
-       data-click-to-select="true"
+       data-toolbar="#toolbar"
        data-pagination="true"
        data-search="true"
        data-ajax="ajaxRequest" @*AJAX için kullanılacak olan Fonksiyon adı dır.*@
        data-url="https://localhost:44353/api/Kisi/GET"
-       data-side-pagination="server"
        data-buttons="buttons">
     <thead>
         <tr>
             <th id="chk" data-field="state" data-checkbox="true"></th>
-            <th data-sortable="true" data-field="ad">Ad</th>
+            <th data-field="ad">Ad</th>
             <th data-field="soyad">Soyad</th>
             <th data-field="yas">Yas</th>
         </tr>
@@ -41,44 +40,98 @@
 <script>
 
     var tablo = $('#table');
-    $('#delete').click(function () {
+
+    $(function () {
+        $('#delete').click(function () {
+          
+            var ids = $.map(tablo.bootstrapTable('getSelections'), function (row) {
+                
+                return row.id;
+            });
+            Delete(ids);
+            tablo.bootstrapTable('remove', {
+                field: 'id',
+                values: ids
+            });
+        });
+    });
+
+
+    $('#update').click(function () {
         var ids = $.map(tablo.bootstrapTable('getSelections'), function (row) {
-            console.log(row.id);
-            Delete(row.id);
+            console.log(row);
+            Update(row.id);
             return row.id;
         });
-        tablo.bootstrapTable('remove', {
-            field: 'id',
-            values: ids
-        });      
-    });
+
+
+
+        tablo.bootstrapTable('updateRow', {
+            index: 'id',
+            row: {
+
+            }
+        });
+    })
 
 
     function ajaxRequest(value) {
         var url = "https://localhost:44353/api/Kisi/GET";
         $.get(url + '?' + $.param(value.data)).then(function (result) {
-            console.log(result.length);
-            console.log(result);
+            // console.log(result.length);
+            //console.log(result);
 
             value.success(result);
 
         });
     };
+    //var _ids = [];
     function Delete(id) {
+        console.log(id);
+        var _data = JSON.stringify(id);
+        console.log(_data);
         $.ajax({
-            url: "https://localhost:44353/api/Kisi/Delete/" + id,
+            url: "https://localhost:44353/api/Kisi/Delete",
             type: 'DELETE',
             dataType: 'json',
-            data: { id: id },
+            data: _data,
             contentType: 'application/json; charset=utf-8',
             success: function (result) {
                 alert("Silme Başarılı!");
                 window.location.href = 'https://localhost:44368/Kisi';
             },
-            failure: function (err) {
-                alert("Hata");
+            error: function (err) {
+                console.log(err);
             }
 
         });
     };
+
+
+
+    function Update(id) {
+        //var frm = $('#form');
+        //var _data = JSON.stringify(frm.serializeJSON());
+        $.ajax({
+            url: 'https://localhost:44353/api/Kisi/Put/' + id,
+            type: 'PUT',
+            dataType: 'json',
+            data: { id: id },
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                console.log(result);
+                alert("Kayıt");
+
+                window.location.href = 'https://localhost:44368/Kisi/Edit';
+            },
+            failure: function (err) {
+                console.log(err);
+                alert("Yanlış");
+            }
+        });
+    };
+
+
+
 </script>

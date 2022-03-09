@@ -1,6 +1,7 @@
 ﻿using API.Models.Context;
 using API.Models.Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace API.Controllers
             return Json(kisiler);
         }
 
-     
+
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -38,20 +39,24 @@ namespace API.Controllers
             db.SaveChanges();
         }
 
-       
+
         [HttpPut("Put/{id}")]
         public void Put(int id)
         {
-            db.Kisiler.Update(db.Kisiler.Find(id));
+            db.Kisiler.UpdateRange(db.Kisiler.Find(id));
             db.SaveChanges();
         }
 
-        [HttpDelete("Delete/{id}")]
-        public void Delete(int id)
+        [HttpDelete("Delete")]
+        public void Delete(List<int> id)
         {
-            Kisi nesne = db.Kisiler.Find(id);
-            nesne.IsActive = false;
-            db.Kisiler.Update(nesne);
+            foreach (var item in id)
+            {
+                Kisi nesne = db.Kisiler.Find(item);
+                nesne.IsActive = false;
+                db.Kisiler.Update(nesne);
+            }
+           
             db.SaveChanges();
         }
     }
