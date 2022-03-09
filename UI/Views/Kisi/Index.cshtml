@@ -43,7 +43,7 @@
 
     $(function () {
         $('#delete').click(function () {
-          
+          //map ile each(JQuery deki foreach aynı şeydir. Fakat tek farkı map fonksiyonu geriye array türünde nesne döndürür.) 
             var ids = $.map(tablo.bootstrapTable('getSelections'), function (row) {
                 
                 return row.id;
@@ -85,7 +85,9 @@
 
         });
     };
-    //var _ids = [];
+
+
+
     function Delete(id) {
         console.log(id);
         var _data = JSON.stringify(id);
