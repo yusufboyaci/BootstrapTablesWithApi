@@ -30,7 +30,7 @@
             <th data-field="ad">Ad</th>
             <th data-field="soyad">Soyad</th>
             <th data-field="yas">Yas</th>
-            <th data-field="operate" data-formatter="operateFormatter" data-events="window.operateEvents">İşlem</th>
+            <th data-field="operate" data-formatter="operateFormatter" data-events="window.operateEvents()">İşlem</th>
 
         </tr>
     </thead>
@@ -44,24 +44,27 @@
     var tablo = $('#grdTable');
 
 
-    $(document).ready(function () {
+    //$(document).ready(function () {
 
-        $('#delete').click(function () {
-            //map ile each(JQuery deki foreach aynı şeydir. Fakat tek farkı map fonksiyonu geriye array türünde nesne döndürür.)
-            var ids = $.map(tablo.bootstrapTable('getSelections'), function (row) {
-                return row.id;
-                console.log(ids);
-            });
-            Delete(ids);
-            tablo.bootstrapTable('remove', {
-                field: 'id',
-                values: ids
-            });
-        });
+    //    $('#delete').click(function () {
+    //        //map ile each(JQuery deki foreach aynı şeydir. Fakat tek farkı map fonksiyonu geriye array türünde nesne döndürür.)
+    //        var ids = $.map(tablo.bootstrapTable('getSelections'), function (row) {
+    //            return row.id;
+    //        });
+    //        console.log(ids);
+    //        Delete(ids);
+    //        tablo.bootstrapTable('remove', {
+    //            field: 'id',
+    //            values: ids
+    //        });
+    //    });
 
 
-    });
+    //});
 
+
+
+  
 
 
 
@@ -78,8 +81,6 @@
             dataType: 'json',
             async: false,
             success: function (result) {
-
-
                 $('#grdTable').bootstrapTable('load', result);
                 $('#grdTable').bootstrapTable({ data: result });
 
@@ -92,48 +93,6 @@
         });
 
     };
-
-
-
-
-    function operateFormatter(value, row, index) {
-
-
-        return [
-            '<a class="btn btn-outline-danger" href="javascript:void(0)">',
-            '<i class="fa fa-trash"></i>',
-            '</a>',
-            '<a class="btn btn-outline-info" href="javascript:void(0)">',
-            '<i class="fa fa-edit"></i>',
-            '</a>'
-        ].join('')
-    };
-
-
-
-
-
-
-    //$(function () {
-    //    $('#delete').click(function () {
-    //        //map ile each(JQuery deki foreach aynı şeydir. Fakat tek farkı map fonksiyonu geriye array türünde nesne döndürür.)
-    //        var ids = $.map(tablo.bootstrapTable('getSelections'), function (row) {
-    //            return row.id;
-    //            console.log(ids);
-    //        });
-    //        Delete(ids);
-    //        tablo.bootstrapTable('remove', {
-    //            field: 'id',
-    //            values: ids
-    //        });
-    //    });
-    //});
-
-
-
-
-
-    //join() bir arraydaki bilgileri birleştirir.
     window.operateEvents = {
         'click .remove': function (e, value, row, index) {
             tablo.bootstrapTable('remove', {
@@ -142,6 +101,106 @@
             })
         }
     };
+
+
+
+    //join() bir arraydaki bilgileri birleştirir.
+    function operateFormatter(value, row, index) {
+        //console.log(row.id);
+        //console.log(index);
+        return [
+            `<button class="btn btn-outline-danger remove" onclick="Sil(${row.id})">`,
+            '<i class="fa fa-trash"></i>',
+            '</button>',
+            '<a class="btn btn-outline-info" href="javascript:void(0)">',
+            '<i class="fa fa-edit"></i>',
+            '</a>'
+        ].join('');
+    };
+
+
+    $(function () {
+        $('#delete').click(function () {
+            //map ile each(JQuery deki foreach aynı şeydir. Fakat tek farkı map fonksiyonu geriye array türünde nesne döndürür.)
+            var ids = $.map(tablo.bootstrapTable('getSelections'), function (row) {
+                return row.id;
+            });
+            console.log(ids);
+            Delete(ids);
+            tablo.bootstrapTable('remove', {
+                field: 'id',
+                values: ids
+            });
+        });
+    });
+
+
+    function Sil(id) {//Buradaki id tek bir id değil id listesidir.
+        //if (!confirm('Silmek istediğinize emin misiniz')) {
+        //    return;
+        //}
+        //var _data = [JSON.stringify(id)];
+        //console.log(_data);
+
+        var _id = [id];
+        var _data = JSON.stringify(_id);
+        console.log(_id);
+        $.ajax({
+            url: "https://localhost:44353/api/Kisi/Delete",
+            type: 'DELETE',
+            dataType: 'json',
+            data: _data,
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                alert("Silme Başarılı!");
+                window.location.href = 'https://localhost:44368/Kisi';
+            },
+            failure: function (err) {
+                alert("Delete kısmında hata var kontrol et!!!");
+                console.log(err);
+            }
+
+        });
+        tablo.bootstrapTable('remove', {
+            field: 'id',
+            values: _id
+        })
+    }
+
+
+
+
+    function Delete(id) {//Buradaki id tek bir id değil id listesidir.
+       // console.log(id);
+        var _data = JSON.stringify(id);
+        //console.log(_data);
+        $.ajax({
+            url: "https://localhost:44353/api/Kisi/Delete",
+            type: 'DELETE',
+            dataType: 'json',
+            data: _data,
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                alert("Silme Başarılı!");
+                window.location.href = 'https://localhost:44368/Kisi';
+            },
+            failure: function (err) {
+                alert("Delete kısmında hata var kontrol et!!!");
+                console.log(err);
+            }
+
+        });
+    };
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -190,26 +249,6 @@
 
 
 
-    function Delete(id) {
-        console.log(id);
-        var _data = JSON.stringify(id);
-        console.log(_data);
-        $.ajax({
-            url: "https://localhost:44353/api/Kisi/Delete",
-            type: 'DELETE',
-            dataType: 'json',
-            data: _data,
-            contentType: 'application/json; charset=utf-8',
-            success: function (result) {
-                alert("Silme Başarılı!");
-                window.location.href = 'https://localhost:44368/Kisi';
-            },
-            error: function (err) {
-                console.log(err);
-            }
-
-        });
-    };
 
 
 
@@ -230,7 +269,7 @@
                 window.location.href = 'https://localhost:44368/Kisi/Edit';
             },
             failure: function (err) {
-                console.log(err);
+                //console.log(err);
                 alert("Yanlış");
             }
         });
