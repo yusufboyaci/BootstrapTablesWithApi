@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UI.Models;
 
 namespace UI.Controllers
 {
@@ -16,9 +17,9 @@ namespace UI.Controllers
         {
             return View();
         }
-        public IActionResult Edit()
+        public IActionResult Edit(KisiVM nesne)
         {
-            return View();
+            return View(nesne);
         }
 
         public IActionResult Deneme()

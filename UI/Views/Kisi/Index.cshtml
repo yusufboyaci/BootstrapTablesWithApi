@@ -64,7 +64,7 @@
 
 
 
-  
+
 
 
 
@@ -125,7 +125,7 @@
             var ids = $.map(tablo.bootstrapTable('getSelections'), function (row) {
                 return row.id;
             });
-            console.log(ids);
+            //console.log(ids);
             Delete(ids);
             tablo.bootstrapTable('remove', {
                 field: 'id',
@@ -144,7 +144,7 @@
 
         var _id = [id];
         var _data = JSON.stringify(_id);
-        console.log(_id);
+        //console.log(_id);
         $.ajax({
             url: "https://localhost:44353/api/Kisi/Delete",
             type: 'DELETE',
@@ -167,11 +167,8 @@
         })
     }
 
-
-
-
     function Delete(id) {//Buradaki id tek bir id değil id listesidir.
-       // console.log(id);
+        // console.log(id);
         var _data = JSON.stringify(id);
         //console.log(_data);
         $.ajax({
@@ -191,37 +188,6 @@
 
         });
     };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    $('#update').click(function () {
-        var ids = $.map(tablo.bootstrapTable('getSelections'), function (row) {
-            console.log(row);
-            Update(row.id);
-            return row.id;
-        });
-
-
-
-        tablo.bootstrapTable('updateRow', {
-            index: 'id',
-            row: {
-
-            }
-        });
-    })
 
 
 
@@ -249,15 +215,36 @@
 
 
 
+    $('#update').click(function () {
+        var ids = $.map(tablo.bootstrapTable('getSelections'), function (row) {
+            Edit(row.id);
+            return row.id;
+
+            tablo.bootstrapTable('updateRow', {
+                index: 'id',
+                row: {
+                    id: row.id,
+                    ad: row.ad,
+                    soyad: row.soyad,
+                    isActive: true,
+                    yas: row.yas
+                }
+
+            });
+        });
 
 
-
-    function Update(id) {
+    })
+    function Edit(id) {
         //var frm = $('#form');
         //var _data = JSON.stringify(frm.serializeJSON());
+        console.log(id);
+
+        //window.location.href = 'https://localhost:44368/Kisi/Edit/' + id;
+
         $.ajax({
-            url: 'https://localhost:44353/api/Kisi/Put/' + id,
-            type: 'PUT',
+            url: 'https://localhost:44353/api/Kisi/Get/',
+            type: 'GET',
             dataType: 'json',
             data: { id: id },
             contentType: 'application/json; charset=utf-8',
@@ -266,11 +253,11 @@
                 console.log(result);
                 alert("Kayıt");
 
-                window.location.href = 'https://localhost:44368/Kisi/Edit';
+                window.location.href = 'https://localhost:44368/Kisi/Edit/' + id;
             },
-            failure: function (err) {
-                //console.log(err);
-                alert("Yanlış");
+            error: function (err) {
+                console.log(err);
+                alert("Update kısmında hata var düzelt!!!");
             }
         });
     };
