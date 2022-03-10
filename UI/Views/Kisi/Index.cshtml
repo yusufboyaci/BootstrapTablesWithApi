@@ -15,21 +15,23 @@
     <button id="update" class="btn btn-info">Güncelle</button>
 </div>
 
-<table id="table"
+<table id="grdTable"
+       @*data-url="https://localhost:44353/api/Kisi/GET"
+      data-ajax="ajaxRequest" AJAX için kullanılacak olan Fonksiyon adı dır.*@
        data-toggle="table"
+       data-click-to-select="true"
        data-show-columns="true"
        data-toolbar="#toolbar"
        data-pagination="true"
-       data-search="true"
-       data-ajax="ajaxRequest" @*AJAX için kullanılacak olan Fonksiyon adı dır.*@
-       data-url="https://localhost:44353/api/Kisi/GET"
-       data-buttons="buttons">
+       data-search="true">
     <thead>
         <tr>
             <th id="chk" data-field="state" data-checkbox="true"></th>
             <th data-field="ad">Ad</th>
             <th data-field="soyad">Soyad</th>
             <th data-field="yas">Yas</th>
+            <th data-field="operate" data-formatter="operateFormatter" data-events="window.operateEvents">İşlem</th>
+
         </tr>
     </thead>
     <tbody>
@@ -39,14 +41,16 @@
 </table>
 <script>
 
-    var tablo = $('#table');
+    var tablo = $('#grdTable');
 
-    $(function () {
+
+    $(document).ready(function () {
+
         $('#delete').click(function () {
-          //map ile each(JQuery deki foreach aynı şeydir. Fakat tek farkı map fonksiyonu geriye array türünde nesne döndürür.) 
+            //map ile each(JQuery deki foreach aynı şeydir. Fakat tek farkı map fonksiyonu geriye array türünde nesne döndürür.)
             var ids = $.map(tablo.bootstrapTable('getSelections'), function (row) {
-                
                 return row.id;
+                console.log(ids);
             });
             Delete(ids);
             tablo.bootstrapTable('remove', {
@@ -54,7 +58,93 @@
                 values: ids
             });
         });
+
+
     });
+
+
+
+
+
+    VeriListele();
+
+
+    function VeriListele() {
+        var url = "https://localhost:44353/api/Kisi/GET";
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: 'json',
+            async: false,
+            success: function (result) {
+
+
+                $('#grdTable').bootstrapTable('load', result);
+                $('#grdTable').bootstrapTable({ data: result });
+
+            },
+            error: function (err) {
+                alert("hata var");
+                console.log(err);
+            }
+
+        });
+
+    };
+
+
+
+
+    function operateFormatter(value, row, index) {
+
+
+        return [
+            '<a class="btn btn-outline-danger" href="javascript:void(0)">',
+            '<i class="fa fa-trash"></i>',
+            '</a>',
+            '<a class="btn btn-outline-info" href="javascript:void(0)">',
+            '<i class="fa fa-edit"></i>',
+            '</a>'
+        ].join('')
+    };
+
+
+
+
+
+
+    //$(function () {
+    //    $('#delete').click(function () {
+    //        //map ile each(JQuery deki foreach aynı şeydir. Fakat tek farkı map fonksiyonu geriye array türünde nesne döndürür.)
+    //        var ids = $.map(tablo.bootstrapTable('getSelections'), function (row) {
+    //            return row.id;
+    //            console.log(ids);
+    //        });
+    //        Delete(ids);
+    //        tablo.bootstrapTable('remove', {
+    //            field: 'id',
+    //            values: ids
+    //        });
+    //    });
+    //});
+
+
+
+
+
+    //join() bir arraydaki bilgileri birleştirir.
+    window.operateEvents = {
+        'click .remove': function (e, value, row, index) {
+            tablo.bootstrapTable('remove', {
+                field: 'id',
+                values: [row.id]
+            })
+        }
+    };
+
+
+
 
 
     $('#update').click(function () {
@@ -75,16 +165,28 @@
     })
 
 
-    function ajaxRequest(value) {
-        var url = "https://localhost:44353/api/Kisi/GET";
-        $.get(url + '?' + $.param(value.data)).then(function (result) {
-            // console.log(result.length);
-            //console.log(result);
 
-            value.success(result);
 
-        });
-    };
+    //function ajaxRequest(value) {
+    //    var url = "https://localhost:44353/api/Kisi/GET";
+
+
+    //    $.get(url + '?' + $.param(value.data)).then(function (result) {
+    //        console.log(result.length);
+    //        console.log(result);
+
+    //        value.success(result);
+
+
+    //        console.log(value);
+    //    });
+
+    //};
+
+
+
+
+
 
 
 
