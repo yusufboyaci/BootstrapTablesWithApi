@@ -135,13 +135,13 @@
 
     //join() bir arraydaki bilgileri birleştirir.
     function operateFormatter(value, row, index) {
-        console.log(row.id);
-        console.log(row);
         return [
             `<button class="btn btn-outline-danger remove" onclick="Sil(${row.id})">`,
             '<i class="fa fa-trash"></i>',
             '</button>',
-            '<button class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#modalTable" onclick="UpdateButton(\'' + row.id + '\',\'' + row.ad + '\', \'' + row.soyad + '\',\'' + row.yas + '\') ">',/*https://stackoverflow.com/questions/13285489/pass-multiple-values-with-onclick-in-html-link den bunun nasıl yapıldığı anlatıyor. row nesnesi direk UpdateButton ile yollanamdığı için kullanılır.*/
+            '<button class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#modalTable" onclick="UpdateButton(\'' + row.id + '\',\'' + row.ad + '\', \'' + row.soyad + '\',\'' + row.yas + '\') ">',
+
+            /*https://stackoverflow.com/questions/13285489/pass-multiple-values-with-onclick-in-html-link den bunun nasıl yapıldığı anlatıyor. row nesnesi direk UpdateButton ile yollanamdığı için kullanılır.*/
             '<i class="fa fa-edit"></i>',
             '</button>'
         ].join('');
@@ -150,6 +150,9 @@
 
     $(function () {
         $('#delete').click(function () {
+            if (!confirm('Silmek istediğinize emin misiniz')) {
+                return;
+            }
             //map ile each(JQuery deki foreach aynı şeydir. Fakat tek farkı map fonksiyonu geriye array türünde nesne döndürür.)
             var ids = $.map(tablo.bootstrapTable('getSelections'), function (row) {
                 return row.id;
@@ -168,11 +171,9 @@
     function Sil(id) {//Buradaki id tek bir id değil id listesidir.
 
 
-        //if (!confirm('Silmek istediğinize emin misiniz')) {
-        //    return;
-        //}
-        //var _data = [JSON.stringify(id)];
-        //console.log(_data);
+        if (!confirm('Silmek istediğinize emin misiniz')) {
+            return;
+        }
 
         var _id = [id];
         var _data = JSON.stringify(_id);
