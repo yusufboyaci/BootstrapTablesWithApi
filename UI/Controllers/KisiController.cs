@@ -17,10 +17,13 @@ namespace UI.Controllers
         {
             return View();
         }
+
         public IActionResult Edit(KisiVM nesne)
         {
             return View(nesne);
+            //return PartialView(nesne);
         }
+      
 
         public IActionResult Deneme()
         {

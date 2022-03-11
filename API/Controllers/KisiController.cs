@@ -26,10 +26,10 @@ namespace API.Controllers
         }
 
 
-        [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        [HttpGet("Get/{id}")]
+        public IActionResult Get(int Id)
         {
-            return Json(db.Kisiler.Find(id));
+            return Json(db.Kisiler.Find(Id));
         }
         [HttpPost("Post")]
         public void Post(Kisi nesne)

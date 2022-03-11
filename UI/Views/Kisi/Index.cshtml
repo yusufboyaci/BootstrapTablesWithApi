@@ -39,7 +39,59 @@
         </tr>
     </tbody>
 </table>
+
+
+<button id="buttonGuncelle" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalTable">
+    Güncelleme Butonu
+</button>
+
+
+
+<div id="modalTable" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal table</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <input name="Id" type="hidden" id="KisiObjectID"/>
+                <div class="form-group">
+                    <label  class="control-label">Ad</label>
+                    <input name="ad" id="Ad" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label  class="control-label">Soyad</label>
+                    <input name="soyad" id="Soyad"  class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Yaş</label>
+                    <input name="yas" id="Yas" class="form-control" />
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
 <script>
+
+
+
+
 
     var tablo = $('#grdTable');
 
@@ -215,7 +267,8 @@
 
 
 
-    $('#update').click(function () {
+   // $('#update').click(function () {
+    $('#buttonGuncelle').click(function () {
         var ids = $.map(tablo.bootstrapTable('getSelections'), function (row) {
             Edit(row.id);
             return row.id;
@@ -229,6 +282,7 @@
                     isActive: true,
                     yas: row.yas
                 }
+              
 
             });
         });
@@ -238,22 +292,27 @@
     function Edit(id) {
         //var frm = $('#form');
         //var _data = JSON.stringify(frm.serializeJSON());
-        console.log(id);
-
-        //window.location.href = 'https://localhost:44368/Kisi/Edit/' + id;
+        //console.log(id);
 
         $.ajax({
-            url: 'https://localhost:44353/api/Kisi/Get/',
+            url: 'https://localhost:44353/api/Kisi/Get/' + id,
             type: 'GET',
             dataType: 'json',
-            data: { id: id },
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
+            data: { Id: id },
+            async:false,
+            //contentType: 'application/json; charset=utf-8',
             success: function (result) {
-                console.log(result);
-                alert("Kayıt");
 
-                window.location.href = 'https://localhost:44368/Kisi/Edit/' + id;
+               // $("body").append($('<div id="divPopup"></div>'));
+                //$("#divPopup").append($('#editForm')).html(JSON.stringify(result));
+                $("#Ad").val(result.ad);
+                $("#Soyad").val(result.soyad);
+                $("#Yas").val(result.yas);
+               // $("#editForm").modal('show');
+                //var bilgi = JSON.stringify(result);
+                //sessionStorage.setItem("editBilgi", bilgi);
+                // window.location.href = 'https://localhost:44368/Kisi/Edit/' + id;
+                //EditGonder(result);
             },
             error: function (err) {
                 console.log(err);
@@ -263,5 +322,23 @@
     };
 
 
+    //function EditGonder(obj) {
+
+    //    var _nesne = JSON.stringify(obj);
+    //    $.ajax({
+    //        //url: 'https://localhost:44368/Kisi/Edit/' + _nesne.id,
+    //        url: '/Kisi/Edit/' + obj.id,
+    //        type: 'POST',
+    //        data: { nesne: _nesne },
+    //        contentType: 'application/json; charset=utf-8',
+    //        dataType: 'json',
+    //        success: function (result) {
+                
+    //        },
+    //        error: function (err) {
+    //            alert("Update kısmında hata var düzelt!!!");
+    //        }
+    //    })
+    //}
 
 </script>
