@@ -97,24 +97,6 @@
     var tablo = $('#grdTable');
 
 
-    //$(document).ready(function () {
-
-    //    $('#delete').click(function () {
-    //        //map ile each(JQuery deki foreach aynı şeydir. Fakat tek farkı map fonksiyonu geriye array türünde nesne döndürür.)
-    //        var ids = $.map(tablo.bootstrapTable('getSelections'), function (row) {
-    //            return row.id;
-    //        });
-    //        console.log(ids);
-    //        Delete(ids);
-    //        tablo.bootstrapTable('remove', {
-    //            field: 'id',
-    //            values: ids
-    //        });
-    //    });
-
-
-    //});
-
 
     VeriListele();
 
@@ -238,9 +220,7 @@
 
         });
     };
-
-
-  
+ 
     function Kisi(id, ad, soyad, yas) {
             /*https://www.freecodecamp.org/news/javascript-classes-how-they-work-with-use-case/ bu metot un nasıl yapılacağı anlatılıyor. */
         this.id = id;
