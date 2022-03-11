@@ -18,10 +18,9 @@ namespace UI.Controllers
             return View();
         }
 
-        public IActionResult Edit(KisiVM nesne)
+        public IActionResult Edit()
         {
-            return View(nesne);
-            //return PartialView(nesne);
+            return View();
         }
       
 

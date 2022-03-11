@@ -12,7 +12,7 @@
 
 <div id="toolbar">
     <button id="delete" class="btn btn-danger">Sil</button>
-    <button id="update" class="btn btn-info">Güncelle</button>
+
 </div>
 
 <table id="grdTable"
@@ -41,9 +41,9 @@
 </table>
 
 
-<button id="buttonGuncelle" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalTable">
-    Güncelleme Butonu
-</button>
+@*<button id="buttonGuncelle" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalTable">
+        Güncelleme Butonu
+    </button>*@
 
 
 
@@ -58,14 +58,14 @@
             </div>
             <div class="modal-body">
 
-                <input name="Id" type="hidden" id="KisiObjectID"/>
+                <input name="Id" type="hidden" id="KisiObjectID" />
                 <div class="form-group">
-                    <label  class="control-label">Ad</label>
+                    <label class="control-label">Ad</label>
                     <input name="ad" id="Ad" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label  class="control-label">Soyad</label>
-                    <input name="soyad" id="Soyad"  class="form-control" />
+                    <label class="control-label">Soyad</label>
+                    <input name="soyad" id="Soyad" class="form-control" />
                 </div>
                 <div class="form-group">
                     <label class="control-label">Yaş</label>
@@ -74,6 +74,7 @@
 
             </div>
             <div class="modal-footer">
+                <button id="update" class="btn btn-info">Güncelle</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -158,15 +159,16 @@
 
     //join() bir arraydaki bilgileri birleştirir.
     function operateFormatter(value, row, index) {
-        //console.log(row.id);
+       console.log(row.id);
         //console.log(index);
         return [
             `<button class="btn btn-outline-danger remove" onclick="Sil(${row.id})">`,
             '<i class="fa fa-trash"></i>',
             '</button>',
-            '<a class="btn btn-outline-info" href="javascript:void(0)">',
+                '<button class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#modalTable" onclick="UpdateButton(' + row.id + ')">',
+            /* `<button id="updateButton" class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#modalTable" >`,*/
             '<i class="fa fa-edit"></i>',
-            '</a>'
+            '</button>'
         ].join('');
     };
 
@@ -188,6 +190,8 @@
 
 
     function Sil(id) {//Buradaki id tek bir id değil id listesidir.
+
+
         //if (!confirm('Silmek istediğinize emin misiniz')) {
         //    return;
         //}
@@ -242,35 +246,35 @@
     };
 
 
+    //$('#updateButton').click(function () {
+    //    var ids = $.map(tablo.bootstrapTable)
+    //})
 
 
-    //function ajaxRequest(value) {
-    //    var url = "https://localhost:44353/api/Kisi/GET";
+    function UpdateButton(id) {
+        debugger;
+        Edit(id);
+        $('#update').click(function () {
+            row.ad = $("#Ad").val();
+            row.soyad = $("#Soyad").val();
+            row.yas = $("#Yas").val();
+            console.log(row);
+            Update(row);
+        });
+
+    };
 
 
-    //    $.get(url + '?' + $.param(value.data)).then(function (result) {
-    //        console.log(result.length);
-    //        console.log(result);
-
-    //        value.success(result);
-
-
-    //        console.log(value);
-    //    });
-
-    //};
-
-
-
-
-
-
-
-
-   // $('#update').click(function () {
     $('#buttonGuncelle').click(function () {
         var ids = $.map(tablo.bootstrapTable('getSelections'), function (row) {
             Edit(row.id);
+            $('#update').click(function () {
+                row.ad = $("#Ad").val();
+                row.soyad = $("#Soyad").val();
+                row.yas = $("#Yas").val();
+                console.log(row);
+                Update(row);
+            });
             return row.id;
 
             tablo.bootstrapTable('updateRow', {
@@ -282,7 +286,7 @@
                     isActive: true,
                     yas: row.yas
                 }
-              
+
 
             });
         });
@@ -290,29 +294,20 @@
 
     })
     function Edit(id) {
-        //var frm = $('#form');
-        //var _data = JSON.stringify(frm.serializeJSON());
-        //console.log(id);
 
         $.ajax({
             url: 'https://localhost:44353/api/Kisi/Get/' + id,
             type: 'GET',
             dataType: 'json',
             data: { Id: id },
-            async:false,
-            //contentType: 'application/json; charset=utf-8',
+            async: false,
             success: function (result) {
 
-               // $("body").append($('<div id="divPopup"></div>'));
-                //$("#divPopup").append($('#editForm')).html(JSON.stringify(result));
+
                 $("#Ad").val(result.ad);
                 $("#Soyad").val(result.soyad);
                 $("#Yas").val(result.yas);
-               // $("#editForm").modal('show');
-                //var bilgi = JSON.stringify(result);
-                //sessionStorage.setItem("editBilgi", bilgi);
-                // window.location.href = 'https://localhost:44368/Kisi/Edit/' + id;
-                //EditGonder(result);
+
             },
             error: function (err) {
                 console.log(err);
@@ -322,23 +317,45 @@
     };
 
 
-    //function EditGonder(obj) {
+    //function Update(id) {
 
-    //    var _nesne = JSON.stringify(obj);
+
     //    $.ajax({
-    //        //url: 'https://localhost:44368/Kisi/Edit/' + _nesne.id,
-    //        url: '/Kisi/Edit/' + obj.id,
-    //        type: 'POST',
-    //        data: { nesne: _nesne },
+    //        url: 'https://localhost:44353/api/Kisi/Put/' + id,
+    //        type: 'PUT',
+    //        data: { id: id },
     //        contentType: 'application/json; charset=utf-8',
     //        dataType: 'json',
     //        success: function (result) {
-                
+
     //        },
     //        error: function (err) {
     //            alert("Update kısmında hata var düzelt!!!");
     //        }
     //    })
     //}
+
+
+
+    function Update(obj) {
+
+        var _nesne = JSON.stringify(obj);
+        //var _id = obj.id;
+        console.log(_nesne);
+        $.ajax({
+            url: 'https://localhost:44353/api/Kisi/Put',
+            type: 'PUT',
+            //data: { nesne: _nesne },
+            data: _nesne,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+
+            },
+            error: function (err) {
+                alert("Update kısmında hata var düzelt!!!");
+            }
+        })
+    }
 
 </script>

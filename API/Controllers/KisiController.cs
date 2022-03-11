@@ -31,6 +31,7 @@ namespace API.Controllers
         {
             return Json(db.Kisiler.Find(Id));
         }
+
         [HttpPost("Post")]
         public void Post(Kisi nesne)
         {
@@ -40,10 +41,17 @@ namespace API.Controllers
         }
 
 
-        [HttpPut("Put/{id}")]
-        public void Put(int id)
+        //[HttpPut("Put/{id}")]
+        //public void Put(int id)
+        //{
+        //    db.Kisiler.Update(db.Kisiler.Find(id));
+        //    db.SaveChanges();
+        //}
+
+        [HttpPut("Put")]
+        public void Put(Kisi nesne)
         {
-            db.Kisiler.UpdateRange(db.Kisiler.Find(id));
+            db.Kisiler.Update(nesne);
             db.SaveChanges();
         }
 
