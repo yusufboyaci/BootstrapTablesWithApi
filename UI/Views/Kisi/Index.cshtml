@@ -155,13 +155,11 @@
     function operateFormatter(value, row, index) {
         console.log(row.id);
         console.log(row);
-        //console.log(index);
         return [
             `<button class="btn btn-outline-danger remove" onclick="Sil(${row.id})">`,
             '<i class="fa fa-trash"></i>',
             '</button>',
-            '<button class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#modalTable" onclick="UpdateButton(\'' + row.id + '\',\'' + row.ad + '\', \'' + row.soyad + '\',\'' + row.yas + '\') ">',
-            /* `<button id="updateButton" class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#modalTable" >`,*/
+            '<button class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#modalTable" onclick="UpdateButton(\'' + row.id + '\',\'' + row.ad + '\', \'' + row.soyad + '\',\'' + row.yas + '\') ">',/*https://stackoverflow.com/questions/13285489/pass-multiple-values-with-onclick-in-html-link den bunun nasıl yapıldığı anlatıyor. row nesnesi direk UpdateButton ile yollanamdığı için kullanılır.*/
             '<i class="fa fa-edit"></i>',
             '</button>'
         ].join('');
@@ -174,7 +172,6 @@
             var ids = $.map(tablo.bootstrapTable('getSelections'), function (row) {
                 return row.id;
             });
-            //console.log(ids);
             Delete(ids);
             tablo.bootstrapTable('remove', {
                 field: 'id',
