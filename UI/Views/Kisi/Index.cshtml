@@ -241,7 +241,8 @@
 
 
   
-        function Kisi(id, ad,soyad, yas) {
+    function Kisi(id, ad, soyad, yas) {
+            /*https://www.freecodecamp.org/news/javascript-classes-how-they-work-with-use-case/ bu metot un nasıl yapılacağı anlatılıyor. */
         this.id = id;
         this.ad = ad;
         this.soyad = soyad;
@@ -284,13 +285,9 @@
                     isActive: true,
                     yas: row.yas
                 }
-
-
             });
         });
-
-
-    })
+    });
     function Edit(id) {
 
         $.ajax({
