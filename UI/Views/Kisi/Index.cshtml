@@ -268,6 +268,9 @@
             });
         });
     });
+
+
+
     function Edit(id) {
 
         $.ajax({
@@ -297,12 +300,10 @@
     function Update(obj) {
 
         var _nesne = JSON.stringify(obj);
-        //var _id = obj.id;
         console.log(_nesne);
         $.ajax({
             url: 'https://localhost:44353/api/Kisi/Put',
             type: 'PUT',
-            //data: { nesne: _nesne },
             data: _nesne,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
@@ -310,7 +311,7 @@
                 console.log(result);
                 window.location.reload();
             },
-            failure: function (err) {
+            error: function (err) {
                 alert("Update kısmında hata var düzelt!!!");
             }
         })
