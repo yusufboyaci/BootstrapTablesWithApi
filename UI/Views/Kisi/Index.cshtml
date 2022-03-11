@@ -241,9 +241,7 @@
     };
 
 
-    //$('#updateButton').click(function () {
-    //    var ids = $.map(tablo.bootstrapTable)
-    //})
+  
         function Kisi(id, ad,soyad, yas) {
         this.id = id;
         this.ad = ad;
@@ -260,12 +258,13 @@
             yas = $("#Yas").val();
             const kisi = new Kisi(id, ad, soyad, yas);
             Update(kisi);
+            $('#modalTable').modal('close');
         });
 
     };
 
 
-    $('#buttonGuncelle').click(function () {
+    $('#buttonGuncelle').click(function () {/*Bu metot selection ile yapmak için kullanılmıştır Şuan kullanılmıyor.*/
         var ids = $.map(tablo.bootstrapTable('getSelections'), function (row) {
             Edit(row.id);
             $('#update').click(function () {
@@ -350,9 +349,10 @@
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (result) {
-
+                console.log(result);
+                window.location.reload();
             },
-            error: function (err) {
+            failure: function (err) {
                 alert("Update kısmında hata var düzelt!!!");
             }
         })
