@@ -116,12 +116,6 @@
     //});
 
 
-
-
-
-
-
-
     VeriListele();
 
 
@@ -155,17 +149,18 @@
         }
     };
 
-
+    //\'' + valuationId + '\',\'' + user + '\'
 
     //join() bir arraydaki bilgileri birleştirir.
     function operateFormatter(value, row, index) {
-       console.log(row.id);
+        console.log(row.id);
+        console.log(row);
         //console.log(index);
         return [
             `<button class="btn btn-outline-danger remove" onclick="Sil(${row.id})">`,
             '<i class="fa fa-trash"></i>',
             '</button>',
-                '<button class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#modalTable" onclick="UpdateButton(' + row.id + ')">',
+            '<button class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#modalTable" onclick="UpdateButton(\'' + row.id + '\',\'' + row.ad + '\', \'' + row.soyad + '\',\'' + row.yas + '\') ">',
             /* `<button id="updateButton" class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#modalTable" >`,*/
             '<i class="fa fa-edit"></i>',
             '</button>'
@@ -249,17 +244,22 @@
     //$('#updateButton').click(function () {
     //    var ids = $.map(tablo.bootstrapTable)
     //})
+        function Kisi(id, ad,soyad, yas) {
+        this.id = id;
+        this.ad = ad;
+        this.soyad = soyad;
+        this.yas = yas;
+    }
 
-
-    function UpdateButton(id) {
-        debugger;
+    function UpdateButton(id,ad,soyad,yas) {
+       
         Edit(id);
         $('#update').click(function () {
-            row.ad = $("#Ad").val();
-            row.soyad = $("#Soyad").val();
-            row.yas = $("#Yas").val();
-            console.log(row);
-            Update(row);
+            ad = $("#Ad").val();
+            soyad = $("#Soyad").val();
+            yas = $("#Yas").val();
+            const kisi = new Kisi(id, ad, soyad, yas);
+            Update(kisi);
         });
 
     };

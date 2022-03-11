@@ -51,6 +51,7 @@ namespace API.Controllers
         [HttpPut("Put")]
         public void Put(Kisi nesne)
         {
+            nesne.IsActive = true;
             db.Kisiler.Update(nesne);
             db.SaveChanges();
         }
