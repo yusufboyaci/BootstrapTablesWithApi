@@ -91,14 +91,13 @@
 <script>
 
 
-
-
-
     var tablo = $('#grdTable');
 
-
-
     VeriListele();
+
+
+
+
 
 
     function VeriListele() {
@@ -148,7 +147,7 @@
     };
 
 
-    $(function () {
+    $(document).ready(function () {
         $('#delete').click(function () {
             if (!confirm('Silmek istediğinize emin misiniz')) {
                 return;
@@ -177,7 +176,6 @@
 
         var _id = [id];
         var _data = JSON.stringify(_id);
-        //console.log(_id);
         $.ajax({
             url: "https://localhost:44353/api/Kisi/Delete",
             type: 'DELETE',
@@ -203,7 +201,6 @@
     function Delete(id) {//Buradaki id tek bir id değil id listesidir.
         // console.log(id);
         var _data = JSON.stringify(id);
-        //console.log(_data);
         $.ajax({
             url: "https://localhost:44353/api/Kisi/Delete",
             type: 'DELETE',
@@ -221,17 +218,17 @@
 
         });
     };
- 
+
     function Kisi(id, ad, soyad, yas) {
-            /*https://www.freecodecamp.org/news/javascript-classes-how-they-work-with-use-case/ bu metot un nasıl yapılacağı anlatılıyor. */
+        /*https://www.freecodecamp.org/news/javascript-classes-how-they-work-with-use-case/ bu metot un nasıl yapılacağı anlatılıyor. */
         this.id = id;
         this.ad = ad;
         this.soyad = soyad;
         this.yas = yas;
     }
 
-    function UpdateButton(id,ad,soyad,yas) {
-       
+    function UpdateButton(id, ad, soyad, yas) {
+
         Edit(id);
         $('#update').click(function () {
             ad = $("#Ad").val();
@@ -239,7 +236,7 @@
             yas = $("#Yas").val();
             const kisi = new Kisi(id, ad, soyad, yas);
             Update(kisi);
-            $('#modalTable').modal('close');
+            //$('#modalTable').modal('close');
         });
 
     };
