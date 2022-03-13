@@ -56,8 +56,6 @@
 
             <div id="modal-body" class="modal-body">
                 <form id="form">
-                    @*<input name="id" type="hidden" id="Id" />
-                        <input name="isActive" type="hidden" id="IsActive" />*@
                     <div class="form-group">
                         <label class="control-label">Adres</label>
                         <input name="adres" id="Adres" class="form-control" />
@@ -159,11 +157,13 @@
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (result) {
+                window.location.reload();
                 alert('Ekleme Yapıldı');
             },
             error: function (err) {
-                console.log(err);
-                alert("HATA VAR");
+                window.location.reload();
+               // console.log(err);
+                //alert("HATA VAR");
             }
         });
     }
@@ -311,8 +311,8 @@
                 $('#kisiId').val(result.kisiId);
             },
             error: function (err) {
-                console.log(err);
-                alert('Update hatalı!!!');
+               // console.log(err);
+                //alert('Update hatalı!!!');
             }
         });
     };
@@ -326,11 +326,12 @@
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (result) {
-                console.log(result);
+                //console.log(result);
                 window.location.reload();
             },
             error: function (err) {
-                alert("Update kısmında hata var düzelt!!!");
+                window.location.reload();
+                //alert("Update kısmında hata var düzelt!!!");
             }
         });
     }
