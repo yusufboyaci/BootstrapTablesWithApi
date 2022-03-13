@@ -24,7 +24,7 @@ namespace API.Controllers
             return Json(db.AdresDefterleri.Where(x => x.IsActive == true).ToList());
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("Get/{id}")]
         public IActionResult Get(int id)
         {
             return Json(db.AdresDefterleri.Find(id));
@@ -38,19 +38,23 @@ namespace API.Controllers
             db.SaveChanges();
         }
 
-        [HttpPut("{id}")]
-        public void Put(int id)
+        [HttpPut("Put")]
+        public void Put(AdresDefteri nesne)
         {
-            db.AdresDefterleri.Update(db.AdresDefterleri.Find(id));
+            nesne.IsActive = true;
+            db.AdresDefterleri.Update(nesne);
             db.SaveChanges();
         }
 
-        [HttpDelete("Delete/{id}")]
-        public void Delete(int id)
+        [HttpDelete("Delete")]
+        public void Delete(List<int> id)
         {
-            AdresDefteri nesne = db.AdresDefterleri.Find(id);
-            nesne.IsActive = false;
-            db.AdresDefterleri.Update(nesne);
+            foreach (var item in id)
+            {
+                AdresDefteri nesne = db.AdresDefterleri.Find(item);
+                nesne.IsActive = false;
+                db.AdresDefterleri.Update(nesne);
+            }
             db.SaveChanges();
         }
     }

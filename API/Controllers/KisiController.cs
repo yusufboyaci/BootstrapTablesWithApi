@@ -40,14 +40,6 @@ namespace API.Controllers
             db.SaveChanges();
         }
 
-
-        //[HttpPut("Put/{id}")]
-        //public void Put(int id)
-        //{
-        //    db.Kisiler.Update(db.Kisiler.Find(id));
-        //    db.SaveChanges();
-        //}
-
         [HttpPut("Put")]
         public void Put(Kisi nesne)
         {

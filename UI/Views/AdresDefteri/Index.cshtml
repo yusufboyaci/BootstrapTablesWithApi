@@ -1,0 +1,284 @@
+﻿@model AdresDefteriVM
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<div id="toolbar">
+    <button id="delete" class="btn btn-danger">Sil</button>
+</div>
+<button id="btnEkle" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalTable">
+    Ekle
+</button>
+
+
+<table id="table"
+       data-toggle="table"
+       data-click-to-select="true"
+       data-show-columns="true"
+       data-toolbar="#toolbar"
+       data-pagination="true"
+       data-search="true">
+    <thead>
+        <tr>
+            <th id="chk" data-field="state" data-checkbox="true"></th>
+            <th data-field="adres">Adres</th>
+            <th data-field="mail">Mail</th>
+            <th data-fied="konum">Konum</th>
+            <th data-fied="operate" data-formatter="silGuncelle" data-events="window.operateEvents">İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+        </tr>
+
+    </tbody>
+</table>
+
+
+<div id="modalTable" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal table</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="modal-body" class="modal-body">
+
+                <input name="Id" type="hidden" id="Id" />
+                <div class="form-group">
+                    <label class="control-label">Adres</label>
+                    <input name="adres" id="Adres" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Mail</label>
+                    <input name="mail" id="Mail" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Konum</label>
+                    <input name="konum" id="Konum" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Kişiler</label>
+                    <select id="kisiler" class="form-control">
+                    </select>
+                        <span class="text-danger"></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="update" class="btn btn-info">Güncelle</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    let table = $("#table");
+    List();
+    
+
+    $(document).ready(function () {
+
+        $('#btnEkle').click(function () {
+            KisiListesi();
+        });
+
+        $('#update').click(function () {
+            Add();
+        });
+
+        $("#delete").click(function () {
+            if (!confirm("Silmek istedğinize emin misiniz!")) {
+                return;
+            }
+            let ids = $.map(table.bootstrapTable('getSelections'), function (row) {
+
+                return row.id;
+            });
+            Delete(ids);
+            table.bootstrapTable('remove', {
+                field: 'id',
+                values: ids
+            });
+        });
+    });
+
+
+    function KisiListesi() {
+        let _url = "https://localhost:44353/api/Kisi/Get";
+        $.ajax({
+            url: _url,
+            type: 'GET',
+            dataType: 'json',
+            async: false,
+            success: function (list) {
+              
+            
+                for (var i = 0; i < list.length; i++) {
+                    console.log(list.length);
+                    $('#kisiler').append(
+                        `  
+                            <option value="${list[i].id}">${list[i].ad}</option>
+                   `
+                    );
+                }
+               
+            },
+            error: function (err) {
+                console.log(err);
+                alert("HATA VAR");
+            }
+        });
+
+    };
+
+    function Add() {
+        let frm = $("#modal-body");
+        let _data = JSON.stringify(frm.serializeJSON());
+        $.ajax({
+            url: "https://localhost:44353/api/AdresDefteri/Post",
+            type: 'POST',
+            data: _data,
+            async: false,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                alert('Ekleme Yapıldı');
+            },
+            error: function (err) {
+                console.log(err);
+                alert("HATA VAR");
+            }
+        });
+    }
+    function List() {
+        let _url = "https://localhost:44353/api/AdresDefteri/Get";
+        $.ajax({
+            url: _url,
+            type: 'GET',
+            dataType: 'json',
+            async: false,
+            success: function (liste) {
+                table.bootstrapTable('load', liste);
+                table.bootstrapTable(
+                    {
+                        data: liste
+                    }
+                );
+            },
+            error: function (err) {
+                alert('Listeleme sırasında bir hata ile karşılaşıldı.');
+            }
+        });
+    }
+    window.operateEvents = {
+        'click .sil': function (e, value, row, index) {
+            table.bootstrapTable('remove', {
+                field: 'id',
+                values: [row.id]
+            })
+        }
+    };
+    function silGuncelle(value, row, index) {
+        return [
+            `<button class="btn btn-danger sil" onclick="Sil(${row.id})"><i class="fa fa-trash"></i> </button>
+             <button class="btn btn-info type="button" data-toggle="modal" data-target="#modalTable" onclick="UpdateButton(\ ${row.id}\,\ ${row.adres}\,\ ${row.mail}\,\ ${row.konum}\)"><i class="fa fa-edit"></i> </button>`
+        ];
+    };
+
+    function Sil(id) {
+        if (!confirm("Silmek istediğinize emin misiniz!")) {
+            return;
+        }
+        let _id = [id];
+        let _data = JSON.stringify(_id);
+        $.ajax({
+            url: "https://localhost:44353/api/AdresDefteri/Delete",
+            type: 'DELETE',
+            dataType: 'json',
+            data: _data,
+            async: false,
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                alert("Silme başarılı");
+                window.location.href = 'https://localhost:44353/api/AdresDefteri';
+            },
+            error: function (err) {
+                alert("Delete kısmında hata var kontrol et!!!");
+                console.log(err);
+            },
+        });
+        table.bootstrapTable('remove', {
+            field: 'id',
+            values: _id
+        });
+    }
+
+    function AdresDefteri(id, adres, mail, konum) {
+        this.id = id;
+        this.adres = adres;
+        this.mail = mail;
+        this.konum = konum;
+    }
+    function UpdateButton(id, adres, mail, konum) {
+        Edit(id);
+        $('#update').click(function () {
+            adres = $('#Adres').val();
+            mail = $('#Mail').val();
+            konum = $('#Konum').val();
+            const adresDefteri = new AdresDefteri(id, adres, mail, konum);
+            Update(adresDefteri);
+        });
+    };
+
+    function Edit(id) {
+        $.ajax({
+            url: 'https://localhost:44353/api/AdresDefteri/Get' + id,
+            type: 'GET',
+            dataType: 'json',
+            dataType: {
+                id: id
+            },
+            async: false,
+            success: function (result) {
+                $('#Adres').val(result.adres);
+                $('#Mail').val(result.mail);
+                $('#Konum').val(result.konum);
+            },
+            error: function (err) {
+                console.log(err);
+                alert('Update hatalı!!!');
+            }
+        });
+    };
+
+    function Update(nesne) {
+        let _nesne = JSON.stringify(nesne);
+        $.ajax({
+            url: 'https://localhost:44353/api/AdresDefteri/Put',
+            type: 'PUT',
+            data: _nesne,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                console.log(result);
+                window.location.reload();
+            },
+            error: function (err) {
+                alert("Update kısmında hata var düzelt!!!");
+            }
+        });
+    }
+
+</script>

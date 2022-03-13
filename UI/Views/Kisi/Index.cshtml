@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "Index";
 }
-
 <h1>Index</h1>
 
 <p>
@@ -16,8 +15,6 @@
 </div>
 
 <table id="grdTable"
-       @*data-url="https://localhost:44353/api/Kisi/GET"
-      data-ajax="ajaxRequest" AJAX için kullanılacak olan Fonksiyon adı dır.*@
        data-toggle="table"
        data-click-to-select="true"
        data-show-columns="true"
@@ -149,7 +146,7 @@
 
     $(document).ready(function () {
         $('#delete').click(function () {
-            if (!confirm('Silmek istediğinize emin misiniz')) {
+            if (!confirm('Silmek istediğinize emin misiniz!')) {
                 return;
             }
             //map ile each(JQuery deki foreach aynı şeydir. Fakat tek farkı map fonksiyonu geriye array türünde nesne döndürür.)
@@ -181,6 +178,7 @@
             type: 'DELETE',
             dataType: 'json',
             data: _data,
+            async: false,
             contentType: 'application/json; charset=utf-8',
             success: function (result) {
                 alert("Silme Başarılı!");
@@ -206,6 +204,7 @@
             type: 'DELETE',
             dataType: 'json',
             data: _data,
+            async: false,
             contentType: 'application/json; charset=utf-8',
             success: function (result) {
                 alert("Silme Başarılı!");
@@ -292,17 +291,15 @@
         });
     };
 
-
-
-
     function Update(obj) {
 
         var _nesne = JSON.stringify(obj);
-        console.log(_nesne);
+        //console.log(_nesne);
         $.ajax({
             url: 'https://localhost:44353/api/Kisi/Put',
             type: 'PUT',
             data: _nesne,
+            async: false,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (result) {
@@ -312,7 +309,7 @@
             error: function (err) {
                 alert("Update kısmında hata var düzelt!!!");
             }
-        })
+        });
     }
 
 </script>

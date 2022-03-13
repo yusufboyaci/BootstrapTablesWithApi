@@ -51,21 +51,22 @@
     function Add(event) {
         var frm = $("#form");
         var _data = JSON.stringify(frm.serializeJSON());
-    
+
         $.ajax({
             url: 'https://localhost:44353/api/Kisi/Post',
             type: 'POST',
             data: _data,
+            async: false,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (result) {
                 console.log(result);
                 alert("Ekleme başarılı");
-                
+
                 window.location.href = "https://localhost:44368/Kisi";
-               // window.location.reload();
+                // window.location.reload();
             },
-            failure: function (err) {
+            error: function (err) {
                 console.log(err);
                 alert("HATA");
             }
