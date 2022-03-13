@@ -12,10 +12,11 @@
 
 <div id="toolbar">
     <button id="delete" class="btn btn-danger">Sil</button>
+    <button id="btnEkle" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTable">
+        Ekle
+    </button>
 </div>
-<button id="btnEkle" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalTable">
-    Ekle
-</button>
+
 
 
 <table id="table"
@@ -30,8 +31,8 @@
             <th id="chk" data-field="state" data-checkbox="true"></th>
             <th data-field="adres">Adres</th>
             <th data-field="mail">Mail</th>
-            <th data-fied="konum">Konum</th>
-            <th data-fied="operate" data-formatter="silGuncelle" data-events="window.operateEvents">İşlem</th>
+            <th data-field="konum">Konum</th>
+            <th data-field="operate" data-formatter="silGuncelle" data-events="window.operateEvents">İşlem</th>
         </tr>
     </thead>
     <tbody>
@@ -52,28 +53,32 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div id="modal-body" class="modal-body">
 
-                <input name="Id" type="hidden" id="Id" />
-                <div class="form-group">
-                    <label class="control-label">Adres</label>
-                    <input name="adres" id="Adres" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Mail</label>
-                    <input name="mail" id="Mail" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Konum</label>
-                    <input name="konum" id="Konum" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Kişiler</label>
-                    <select id="kisiler" class="form-control">
-                    </select>
+            <div id="modal-body" class="modal-body">
+                <form id="form">
+                    @*<input name="id" type="hidden" id="Id" />
+                        <input name="isActive" type="hidden" id="IsActive" />*@
+                    <div class="form-group">
+                        <label class="control-label">Adres</label>
+                        <input name="adres" id="Adres" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Mail</label>
+                        <input name="mail" id="Mail" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Konum</label>
+                        <input name="konum" id="Konum" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Kişiler</label>
+                        <select name="kisiId" id="kisiId" class="form-control">
+                        </select>
                         <span class="text-danger"></span>
-                </div>
+                    </div>
+                </form>
             </div>
+
             <div class="modal-footer">
                 <button id="update" class="btn btn-info">Güncelle</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -86,7 +91,7 @@
 
     let table = $("#table");
     List();
-    
+
 
     $(document).ready(function () {
 
@@ -123,17 +128,15 @@
             dataType: 'json',
             async: false,
             success: function (list) {
-              
-            
+
                 for (var i = 0; i < list.length; i++) {
-                    console.log(list.length);
-                    $('#kisiler').append(
-                        `  
+                    $('#kisiId').append(
+                        `
                             <option value="${list[i].id}">${list[i].ad}</option>
                    `
                     );
                 }
-               
+
             },
             error: function (err) {
                 console.log(err);
@@ -144,10 +147,12 @@
     };
 
     function Add() {
-        let frm = $("#modal-body");
+        let frm = $("#form");
         let _data = JSON.stringify(frm.serializeJSON());
+        let _url = "https://localhost:44353/api/AdresDefteri/Post";
+        console.log(_data);
         $.ajax({
-            url: "https://localhost:44353/api/AdresDefteri/Post",
+            url: _url,
             type: 'POST',
             data: _data,
             async: false,
@@ -192,9 +197,9 @@
     };
     function silGuncelle(value, row, index) {
         return [
-            `<button class="btn btn-danger sil" onclick="Sil(${row.id})"><i class="fa fa-trash"></i> </button>
-             <button class="btn btn-info type="button" data-toggle="modal" data-target="#modalTable" onclick="UpdateButton(\ ${row.id}\,\ ${row.adres}\,\ ${row.mail}\,\ ${row.konum}\)"><i class="fa fa-edit"></i> </button>`
-        ];
+            `<button class="btn btn-danger sil" onclick="Sil(${row.id})"><i class="fa fa-trash"></i> </button>`,
+            '<button class="btn btn-info type="button" data-toggle="modal" data-target="#modalTable" onclick="UpdateButton(\'' + row.id + '\',\'' + row.adres + '\',\'' + row.mail + '\',\'' + row.konum + '\',\'' + row.kisiId + '\')"><i class="fa fa-edit"></i> </button>'
+        ].join('');
     };
 
     function Sil(id) {
@@ -215,7 +220,7 @@
                 window.location.href = 'https://localhost:44353/api/AdresDefteri';
             },
             error: function (err) {
-                alert("Delete kısmında hata var kontrol et!!!");
+                // alert("Delete kısmında hata var kontrol et!!!");
                 console.log(err);
             },
         });
@@ -224,30 +229,78 @@
             values: _id
         });
     }
-
-    function AdresDefteri(id, adres, mail, konum) {
+    function Delete(id) {
+        let _data = JSON.stringify(id);
+        let _url = "https://localhost:44353/api/AdresDefteri/Delete";
+        $.ajax({
+            url: _url,
+            type: 'DELETE',
+            dataType: 'json',
+            data: _data,
+            async: false,
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                alert("Silme Başarılı");
+            },
+            error: function (err) {
+                // alert("Delete kısmında hata var kontrol et!!!");
+                console.log(err);
+            }
+        })
+    }
+    function AdresDefteri(id, adres, mail, konum, kisiId) {
         this.id = id;
         this.adres = adres;
         this.mail = mail;
         this.konum = konum;
+        this.kisiId = kisiId;
     }
-    function UpdateButton(id, adres, mail, konum) {
+    function UpdateButton(id, adres, mail, konum, kisiId) {
         Edit(id);
+        KisiListesi()
         $('#update').click(function () {
             adres = $('#Adres').val();
             mail = $('#Mail').val();
             konum = $('#Konum').val();
-            const adresDefteri = new AdresDefteri(id, adres, mail, konum);
+            kisiId = $('#kisiId').val();
+            const adresDefteri = new AdresDefteri(id, adres, mail, konum, kisiId);
             Update(adresDefteri);
         });
     };
 
-    function Edit(id) {
+
+
+    function KisiGetir(kisiId) {/*Bu metot kullanılmıyor. Lazım olur diye yazıldı. Bu proje Çalışma projesi olduğu için*/
+        let _url = "https://localhost:44353/api/Kisi/Get/" + kisiId;
         $.ajax({
-            url: 'https://localhost:44353/api/AdresDefteri/Get' + id,
+            url: _url,
             type: 'GET',
             dataType: 'json',
-            dataType: {
+            data: { Id: kisiId },
+            async: false,
+            success: function (nesne) {
+                console.log(nesne);
+                    $('#kisiId').append(
+                        `
+                            <option value="${nesne.id}">${nesne.ad}</option>
+                   `
+                    );
+
+            },
+            error: function (err) {
+                console.log(err);
+                alert("HATA VAR");
+            }
+        });
+
+    };
+
+    function Edit(id) {
+        $.ajax({
+            url: 'https://localhost:44353/api/AdresDefteri/Get/' + id,
+            type: 'GET',
+            dataType: 'json',
+            data: {
                 id: id
             },
             async: false,
@@ -255,6 +308,7 @@
                 $('#Adres').val(result.adres);
                 $('#Mail').val(result.mail);
                 $('#Konum').val(result.konum);
+                $('#kisiId').val(result.kisiId);
             },
             error: function (err) {
                 console.log(err);
