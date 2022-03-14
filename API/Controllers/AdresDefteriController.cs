@@ -31,23 +31,26 @@ namespace API.Controllers
         }
 
         [HttpPost("Post")]
-        public void Post(AdresDefteri nesne)
+        public IActionResult Post(AdresDefteri nesne)
         {
             nesne.IsActive = true;
             db.AdresDefterleri.Add(nesne);
             db.SaveChanges();
+            return Json("");
         }
 
         [HttpPut("Put")]
-        public void Put(AdresDefteri nesne)
+        public IActionResult Put(AdresDefteri nesne)
         {
             nesne.IsActive = true;
             db.AdresDefterleri.Update(nesne);
             db.SaveChanges();
+            return Json("");
+
         }
 
         [HttpDelete("Delete")]
-        public void Delete(List<int> id)
+        public IActionResult Delete(List<int> id)
         {
             foreach (var item in id)
             {
@@ -56,6 +59,7 @@ namespace API.Controllers
                 db.AdresDefterleri.Update(nesne);
             }
             db.SaveChanges();
+            return Json("");
         }
     }
 }
