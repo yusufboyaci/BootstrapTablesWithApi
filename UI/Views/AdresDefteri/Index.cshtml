@@ -162,7 +162,7 @@
             error: function (err) {
                 window.location.reload();
                // console.log(err);
-                //alert("HATA VAR");
+                alert("HATA VAR");
             }
         });
     }
@@ -219,7 +219,7 @@
                 window.location.href = 'https://localhost:44353/api/AdresDefteri';
             },
             error: function (err) {
-                // alert("Delete kısmında hata var kontrol et!!!");
+                 alert("Delete kısmında hata var kontrol et!!!");
                 console.log(err);
             },
         });
@@ -242,7 +242,7 @@
                 alert("Silme Başarılı");
             },
             error: function (err) {
-                // alert("Delete kısmında hata var kontrol et!!!");
+                 alert("Delete kısmında hata var kontrol et!!!");
                 console.log(err);
             }
         })
@@ -269,7 +269,7 @@
 
 
 
-    function KisiGetir(kisiId) {/*Bu metot kullanılmıyor. Lazım olur diye yazıldı. Bu proje Çalışma projesi olduğu için*/
+    function KisiGetir(kisiId) {
         let _url = "https://localhost:44353/api/Kisi/Get/" + kisiId;
         $.ajax({
             url: _url,
@@ -311,7 +311,7 @@
             },
             error: function (err) {
                // console.log(err);
-                //alert('Update hatalı!!!');
+                alert('Update hatalı!!!');
             }
         });
     };
@@ -330,7 +330,7 @@
             },
             error: function (err) {
                 window.location.reload();
-                //alert("Update kısmında hata var düzelt!!!");
+                alert("Update kısmında hata var düzelt!!!");
             }
         });
     }

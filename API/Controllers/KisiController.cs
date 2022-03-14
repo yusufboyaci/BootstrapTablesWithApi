@@ -42,15 +42,16 @@ namespace API.Controllers
         }
 
         [HttpPut("Put")]
-        public void Put(Kisi nesne)
+        public IActionResult Put(Kisi nesne)
         {
             nesne.IsActive = true;
             db.Kisiler.Update(nesne);
             db.SaveChanges();
+            return Json("");
         }
 
         [HttpDelete("Delete")]
-        public void Delete(List<int> id)
+        public IActionResult Delete(List<int> id)
         {
             foreach (var item in id)
             {
@@ -60,6 +61,7 @@ namespace API.Controllers
             }
 
             db.SaveChanges();
+            return Json("");
         }
     }
 }
