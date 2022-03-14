@@ -29,6 +29,7 @@
             <th data-field="adres">Adres</th>
             <th data-field="mail">Mail</th>
             <th data-field="konum">Konum</th>
+            <th data-field="kisiId">Kişi</th>
             <th data-field="operate" data-formatter="silGuncelle" data-events="window.operateEvents">İşlem</th>
         </tr>
     </thead>
@@ -117,6 +118,7 @@
 
     function KisiListesi() {
         let _url = "https://localhost:44353/api/Kisi/Get";
+        $("#kisiId").empty();
         $.ajax({
             url: _url,
             type: 'GET',
@@ -127,7 +129,7 @@
                 for (var i = 0; i < list.length; i++) {
                     $('#kisiId').append(
                         `
-                            <option value="${list[i].id}">${list[i].ad}</option>
+                            <option value="${list[i].id}">${list[i].ad} ${list[i].soyad}</option>
                    `
                     );
                 }
@@ -279,7 +281,7 @@
                 console.log(nesne);
                     $('#kisiId').append(
                         `
-                            <option value="${nesne.id}">${nesne.ad}</option>
+                            <option value="${nesne.id}">${nesne.ad} ${nesne.soyad}</option>
                    `
                     );
 

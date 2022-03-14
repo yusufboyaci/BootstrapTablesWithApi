@@ -33,11 +33,12 @@ namespace API.Controllers
         }
 
         [HttpPost("Post")]
-        public void Post(Kisi nesne)
+        public IActionResult Post(Kisi nesne)
         {
             nesne.IsActive = true;
             db.Kisiler.Add(nesne);
             db.SaveChanges();
+            return Json("");
         }
 
         [HttpPut("Put")]
@@ -57,7 +58,7 @@ namespace API.Controllers
                 nesne.IsActive = false;
                 db.Kisiler.Update(nesne);
             }
-           
+
             db.SaveChanges();
         }
     }
