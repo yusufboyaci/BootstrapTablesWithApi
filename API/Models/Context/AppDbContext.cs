@@ -16,6 +16,7 @@ namespace API.Models.Context
         }
         public DbSet<Kisi> Kisiler { get; set; }
         public DbSet<AdresDefteri> AdresDefterleri { get; set; }
+        public DbSet<Login> Loginler { get; set; }
         
     }
 }

@@ -15,5 +15,6 @@ namespace API.Models.Entities.Concrete
         public string Soyad { get; set; }
         public int? Yas { get; set; }
         public virtual IEnumerable<AdresDefteri> AdresDefterleri { get; set; }
+        public virtual IEnumerable<Login> Loginler { get; set; }
     }
 }

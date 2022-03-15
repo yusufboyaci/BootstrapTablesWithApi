@@ -9,19 +9,26 @@ namespace UI.Controllers
 {
     public class LoginController : Controller
     {
+
+        private bool LoginUser(string username, string password)
+        {
+
+            return true;
+        }
        
         [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
-        //[HttpPost]
-        //public async Task<IActionResult> Login(LoginVM nesne)
-        //{
-        //    if (true)
-        //    {
-        //        return;
-        //    }
-        //}
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginVM nesne)
+        {
+            if (LoginUser(nesne.Username,nesne.Password))
+            {
+                return View();
+            }
+            return View();
+        }
     }
 }
