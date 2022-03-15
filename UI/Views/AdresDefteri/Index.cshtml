@@ -82,12 +82,12 @@
 </div>
 
 <script>
-
+    $("#kisiListesi").html("aliiiiiii")
     let table = $("#table");
     List();
  
     $(document).ready(function () {
-
+      
         $('#btnEkle').click(function () {
             KisiListesi();
         });
@@ -266,18 +266,20 @@
 
     function Kisiler(value, row, index) {
         //console.log(KisiGetir(row.kisiId));
-        for (var i = 0; i < row.length; i++) {
-            KisiGetir(row.kisiId);
-        }
+        //for (var i = 0; i < row.length; i++) {
+        //    KisiGetir(row.kisiId);
+        //}
+        KisiGetir(row.kisiId);
         return [
             //KisiGetir(row.kisiId)
-           /* `<span id="kisiList">${KisiGetir(row.kisiId)} </span>`*/
+            /* `<span id="kisiList">${KisiGetir(row.kisiId)} </span>`*/
             /*`${KisiGetir(row.kisiId)}`*/
-           /* `Yusuf Yılmaz(${row.kisiId})${KisiGetir(row.kisiId)}`*/
-            `<b id="kisiListesi">Ali Avcı</b>`
-       
+            /* `Yusuf Yılmaz(${row.kisiId})${KisiGetir(row.kisiId)}`*/
+            `<b id="kisiListesi">Ali Yılmaz</b>`
+
         ].join('');
     };
+
 
     function KisiGetir(kisiId) {
         let _url = "https://localhost:44353/api/Kisi/Get/" + kisiId;
@@ -289,11 +291,12 @@
             contentType: 'application/json; charset=utf-8',
             async: false,
             success: function (nesne) {
-                $('#kisiListesi').append(
-                        `
+                $('#kisiListesi').html(
+                    `
                             ${nesne.ad} ${nesne.soyad}
+                            
                    `
-                    );
+                );
 
 
                 //console.log(nesne.ad + ' ' + nesne.soyad);
@@ -301,12 +304,13 @@
                 //return nesne;
             },
             error: function (err) {
-               console.log(err);
+                console.log(err);
                 alert("HATA VAR");
             }
         });
 
     };
+
 
     function Edit(id) {
         $.ajax({
