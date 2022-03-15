@@ -1,6 +1,7 @@
 ﻿using API.Models.Context;
 using API.Models.Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
