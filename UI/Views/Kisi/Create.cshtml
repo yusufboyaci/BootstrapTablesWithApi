@@ -58,19 +58,23 @@
             data: _data,
             async: false,
             contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
+           dataType: 'json',
             success: function (result) {
                 console.log(result);
                 alert("Ekleme başarılı");
 
-                window.location.href = "https://localhost:44368/Kisi";
-                // window.location.reload();
+                window.location.href= "https://localhost:44368/Kisi/Index";
             },
             error: function (err) {
                 console.log(err);
                 alert("HATA");
             }
         });
+    };
+
+
+    function GeriDon() {
+        window.location.href = "https://localhost:44368/Kisi/Index";
     }
 
 </script>
