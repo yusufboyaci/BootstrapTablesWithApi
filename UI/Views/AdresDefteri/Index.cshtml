@@ -14,8 +14,6 @@
     </button>
 </div>
 
-<div id="kisiListesi"></div>@*Deneme silinecektir.*@
-
 <table id="table"
        data-toggle="table"
        data-click-to-select="true"
@@ -87,9 +85,7 @@
 
     let table = $("#table");
     List();
-    KisiGetir(32);
-
-
+ 
     $(document).ready(function () {
 
         $('#btnEkle').click(function () {
@@ -277,7 +273,9 @@
             //KisiGetir(row.kisiId)
            /* `<span id="kisiList">${KisiGetir(row.kisiId)} </span>`*/
             /*`${KisiGetir(row.kisiId)}`*/
-            `yusuf Yılmaz${row.kisiId}`
+           /* `Yusuf Yılmaz(${row.kisiId})${KisiGetir(row.kisiId)}`*/
+            `<b id="kisiListesi">Ali Avcı</b>`
+       
         ].join('');
     };
 
@@ -293,7 +291,7 @@
             success: function (nesne) {
                 $('#kisiListesi').append(
                         `
-                            <p>${nesne.ad} ${nesne.soyad}</p>
+                            ${nesne.ad} ${nesne.soyad}
                    `
                     );
 
