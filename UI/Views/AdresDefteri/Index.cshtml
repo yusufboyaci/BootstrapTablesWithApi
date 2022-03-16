@@ -74,7 +74,8 @@
             </div>
 
             <div class="modal-footer">
-                <button id="update" class="btn btn-info">İşlem Yap</button>
+                <button id="add" class="btn btn-info">Ekle</button>
+                <button id="update" class="btn btn-info">Güncelle</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -83,17 +84,31 @@
 
 <script>
 
-
     let table = $("#table");
     List();
 
     $(document).ready(function () {
 
-        $('#btnEkle').click(function () {
+        $('#btnEkle').click(function (e) {
             KisiListesi();
+
+
+
+            $("#update").hide();
+            $("#add").show();
+
+
+        });
+        $('#btnGuncelle').click(function (e) {
+            $("#add").hide();
+            $("#update").show();
+
+
         });
 
-        $('#update').click(function () {
+
+
+        $('#add').click(function () {
             Add();
         });
 
@@ -145,7 +160,6 @@
         let frm = $("#form");
         let _data = JSON.stringify(frm.serializeJSON());
         let _url = "https://localhost:44353/api/AdresDefteri/Post";
-        console.log(_data);
         $.ajax({
             url: _url,
             type: 'POST',
@@ -154,8 +168,9 @@
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (result) {
-                window.location.reload();
                 alert('Ekleme Yapıldı');
+                window.location.reload();
+
             },
             error: function (err) {
                 window.location.reload();
@@ -195,7 +210,7 @@
     function silGuncelle(value, row, index) {
         return [
             `<button class="btn btn-danger sil" onclick="Sil(${row.id})"><i class="fa fa-trash"></i> </button>`,
-            '<button class="btn btn-info type="button" data-toggle="modal" data-target="#modalTable" onclick="UpdateButton(\'' + row.id + '\',\'' + row.adres + '\',\'' + row.mail + '\',\'' + row.konum + '\',\'' + row.kisiId + '\')"><i class="fa fa-edit"></i> </button>'
+            '<button id="btnGuncelle" class="btn btn-info type="button" data-toggle="modal" data-target="#modalTable" onclick="UpdateButton(\'' + row.id + '\',\'' + row.adres + '\',\'' + row.mail + '\',\'' + row.konum + '\',\'' + row.kisiId + '\')"><i class="fa fa-edit"></i> </button>'
         ].join('');
     };
 
@@ -263,86 +278,111 @@
             const adresDefteri = new AdresDefteri(id, adres, mail, konum, kisiId);
             Update(adresDefteri);
         });
-    }; 
+    };
 
-    var count = 0;
+
+    function V_Kisi_Getir(id) {
+        let _url = "https://localhost:44353/api/AdresDefteri/VInsanlarList/" + id;
+        $.ajax({
+            url: _url,
+            type: 'GET',
+            data: { id: id },
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            success: function (nesne) {
+                //console.log(nesne);
+                $('#inputdeneme').val(nesne.adSoyad);              
+                //return nesne.adSoyad;
+            },
+            error: function (err) {
+                alert('Listeleme sırasında bir hata ile karşılaşıldı.');
+            },
+
+        });
+    };
+
 
     function Kisiler(value, row, index) {
-        //console.log(KisiGetir(row.kisiId));
-       
-        // KisiGetir(row.kisiId);
-        console.log("deneme deneme");
-        console.log(index);
-
         return [
-            //KisiGetir(row.kisiId)
-            /* `<span id="kisiList">${KisiGetir(row.kisiId)} </span>`*/
-            /*`${KisiGetir(row.kisiId)}`*/
-            /* `Yusuf Yılmaz(${row.kisiId})${KisiGetir(row.kisiId)}`*/
-            /*`<b id="kisiListesi"></b>`*/
+             '<input  id="inputdeneme' + index + '" value="" />'
 
-            '<input  id="inputdeneme' + index + '" onclick="KisiGetir(\'' + row.kisiId + '\',\'' + index + '\')" />'
-
+           /* `<b id=inputdeneme> </b>`*/
         ].join('');
-      
-     
-        }
-
-    
+    }
 
 
-    
 
 
-        function KisiGetir(kisiId,satir) {
-            console.log("deneme deneme");
-            console.log("kisiid=>" + kisiId);
-            console.log("satir=>"+satir);
-            let _url = "https://localhost:44353/api/Kisi/Get/" + kisiId;
+
+
+
+
+
+
+
+    /*Bu Yöntem yerine yukardaki view ile çağırdığın metotu kullanarak yap.Şu an bu çalışıyor fakat hatalı.*/
+
+    /***************************************************************************************************** */
+    var listeadres = [];
+    $(document).ready(function () {
+        
+        Listeyapi();
+
+        function Listeyapi() {
+            let _url = "https://localhost:44353/api/AdresDefteri/GetirList";
             $.ajax({
                 url: _url,
                 type: 'GET',
                 dataType: 'json',
-                data: { Id: kisiId },
+                async: false,
+                success: function (result) {
+                    listeadres = result;
+
+                },
+                error: function (err) {
+                    alert('Listeleme sırasında bir hata ile karşılaşıldı.');
+                }
+            });
+        }
+        KisiGetir();
+    });
+
+
+
+    var count = 0;
+
+    function KisiGetir() {
+        count = 0;
+        for (var i = 0; i < listeadres.length; i++) {
+
+            let _url = "https://localhost:44353/api/Kisi/Get/" + listeadres[i];
+            $.ajax({
+                url: _url,
+                type: 'GET',
+                dataType: 'json',
+                data: { Id: i },
                 contentType: 'application/json; charset=utf-8',
                 async: false,
                 success: function (result) {
-
-                    //$('#kisiListesi').html(
-                    //    `
-                    //            ${nesne.ad} ${nesne.soyad}
-
-                    //   `
-                    //);
-                    console.log("girdi");
-                    console.log(result);
-                    $('#inputdeneme' + satir).val(result.ad);
-                    //setTimeout(yenitest, 60000);
-                    //function yenitest() {
-                    //    debugger;
-                    //    document.getElementById("deneme").value = "test";
-                    //}
-                    //var b = document.getElementById("deneme");
-                    //$('#deneme').val("");
-                    //console.log(result.ad + ' ' + result.soyad);
-                    //console.log(result);
-                    //debugger;
-                    //$('#deneme').val(result.ad);
-                    //console.log($("#deneme").val());
-                    //debugger;
-                    // document.getElementById("deneme").value = result.ad;
-
-
-
+                    $('#inputdeneme' + count).val(result.ad);
                 },
                 error: function (err) {
                     console.log(err);
                     alert("HATA VAR");
                 }
             });
+            count = count + 1;
+        }
 
-        };
-    
+
+
+    };
+
+    /************************************************************************************************************************************/
+
+
+
+
 
 
 
@@ -362,7 +402,7 @@
                 $('#kisiId').val(result.kisiId);
             },
             error: function (err) {
-                // console.log(err);
+                console.log(err);
                 alert('Update hatalı!!!');
             }
         });
@@ -377,7 +417,7 @@
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (result) {
-                //console.log(result);
+                alert("Güncelleme Yapıldı");
                 window.location.reload();
             },
             error: function (err) {

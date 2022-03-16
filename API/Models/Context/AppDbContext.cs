@@ -17,6 +17,13 @@ namespace API.Models.Context
         public DbSet<Kisi> Kisiler { get; set; }
         public DbSet<AdresDefteri> AdresDefterleri { get; set; }
         public DbSet<Login> Loginler { get; set; }
-        
+        public DbSet<V_Kisi> Insanlar { get; set; }//database de oluşturulan view bu şekilde tanıtılır.
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<V_Kisi>().ToView("Insanlar").HasNoKey();//database de oluşturulan view bu şekilde tanıtılır.
+            base.OnModelCreating(modelBuilder); 
+        }
+
     }
 }

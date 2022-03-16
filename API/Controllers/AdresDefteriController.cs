@@ -31,6 +31,23 @@ namespace API.Controllers
             return Json(db.AdresDefterleri.Find(id));
         }
 
+        [HttpGet("GetirList")]
+        public IActionResult GetirList()
+        {
+
+            return Json(db.AdresDefterleri.Where(x => x.IsActive == true).Select(x => x.KisiId).ToList());
+
+        }
+
+        [HttpGet("VInsanlarList/{id}")]
+        public IActionResult VInsanlarList(int id)
+        {
+            List<V_Kisi> a = db.Insanlar.Where(x => x.KisiId == id).ToList();
+            return Json(a);
+            //return Json(db.AdresDefterleri.Where(x => x.IsActive == true).ToList().Select(x => x.KisiId));
+
+        }
+
         [HttpPost("Post")]
         public IActionResult Post(AdresDefteri nesne)
         {
