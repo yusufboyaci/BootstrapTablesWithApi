@@ -27,7 +27,35 @@ namespace API.Controllers
         [HttpGet("Get/{id}")]
         public IActionResult Get(int id)
         {
-            return Json()
+            return Json(db.Loginler.Find(id));
+        }
+        [HttpPost("Post")]
+        public IActionResult Post(Login nesne)
+        {
+            nesne.IsActive = true;
+            db.Loginler.Add(nesne);
+            db.SaveChanges();
+            return Json("Ekleme yapıldı");
+        }
+        [HttpPut("Put")]
+        public IActionResult Put(Login nesne)
+        {
+            nesne.IsActive = true;
+            db.Loginler.Update(nesne);
+            db.SaveChanges();
+            return Json("Guncelleme yapıldı");
+        }
+        [HttpDelete("Delete")]
+        public IActionResult Delete(List<int> id)
+        {
+            foreach (var item in id)
+            {
+                Login nesne = db.Loginler.Find(item);
+                nesne.IsActive = false;
+                db.Loginler.Update(nesne);
+            }
+            db.SaveChanges();
+            return Json("Kayit Silindi");
         }
     }
 }
