@@ -42,9 +42,9 @@ namespace API.Controllers
         [HttpGet("VInsanlarList/{id}")]
         public IActionResult VInsanlarList(int id)
         {
-            List<V_Kisi> a = db.Insanlar.Where(x => x.KisiId == id).ToList();
-            return Json(a);
-            //return Json(db.AdresDefterleri.Where(x => x.IsActive == true).ToList().Select(x => x.KisiId));
+            //List<V_Kisi> a = db.Insanlar.Where(x => x.KisiId == id).ToList();
+            //return Json(a);
+            return Json(db.Insanlar.Where(x => x.KisiId == id).ToList());
 
         }
 
