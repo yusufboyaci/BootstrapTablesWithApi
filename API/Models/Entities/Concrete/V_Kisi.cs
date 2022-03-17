@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace API.Models.Entities.Concrete
 {
+    [NotMapped]
     public class V_Kisi
     {
      
