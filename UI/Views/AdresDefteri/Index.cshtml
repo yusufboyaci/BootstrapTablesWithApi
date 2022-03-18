@@ -28,7 +28,6 @@
             <th data-field="mail">Mail</th>
             <th data-field="konum">Konum</th>
             <th data-field="adSoyad">Kişi</th>
-            @*<th data-field="operate" data-formatter="Kisiler">Kişi</th>*@
             <th data-field="operate" data-formatter="silGuncelle" data-events="window.operateEvents">İşlem</th>
         </tr>
     </thead>
@@ -174,8 +173,7 @@
 
             },
             error: function (err) {
-                window.location.reload();
-                // console.log(err);
+                 console.log(err);
                 alert("HATA VAR");
             }
         });
@@ -282,7 +280,8 @@
         });
     };
 
-
+ 
+  
     function V_Kisi_Getir(id) {
         let _url = "https://localhost:44353/api/AdresDefteri/VInsanlarList/" + id;
         $.ajax({
