@@ -66,7 +66,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Kişiler</label>
-                        <select name="kisiId" id="kisiId" class="form-control">
+                        <select name="kisiId" id="" class="form-control kisiId">
                         </select>
                         <span class="text-danger"></span>
                     </div>
@@ -109,7 +109,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Kişiler</label>
-                        <select name="kisiId" id="kisiId" class="form-control">
+                        <select name="kisiId" id="" class="form-control kisiId">
                         </select>
                         <span class="text-danger"></span>
                     </div>
@@ -166,7 +166,7 @@
 
     function KisiListesi() {
         let _url = "https://localhost:44353/api/Kisi/Get";
-        $("#kisiId").empty();
+        $(".kisiId").empty();
         $.ajax({
             url: _url,
             type: 'GET',
@@ -175,7 +175,7 @@
             success: function (list) {
 
                 for (var i = 0; i < list.length; i++) {
-                    $('#kisiId').append(
+                    $('.kisiId').append(
                         `
                             <option value="${list[i].id}">${list[i].ad} ${list[i].soyad}</option>
                    `
@@ -309,7 +309,7 @@
             adres = $('#AdresGuncelle').val();
             mail = $('#MailGuncelle').val();
             konum = $('#KonumGuncelle').val();
-            kisiId = $('#kisiId').val();
+            kisiId = $('.kisiId').val();
             const adresDefteri = new AdresDefteri(id, adres, mail, konum, kisiId);
             Update(adresDefteri);
         });
@@ -379,7 +379,7 @@
                 $('#AdresGuncelle').val(result.adres);
                 $('#MailGuncelle').val(result.mail);
                 $('#KonumGuncelle').val(result.konum);
-                $('#kisiId').val(result.kisiId);
+                $('.kisiId').val(result.kisiId);
             },
             error: function (err) {
                 console.log(err);
