@@ -18,10 +18,12 @@ namespace API.Models.Context
         public DbSet<AdresDefteri> AdresDefterleri { get; set; }
         public DbSet<Login> Loginler { get; set; }
         public DbSet<V_Kisi> Insanlar { get; set; }//database de oluşturulan view bu şekilde tanıtılır.
+        public DbSet<V_KisiVeAdresDefteriTablosu> KisiVeAdresDefteriTablosu { get; set; }//database de oluşturulan view bu şekilde tanıtılır.
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<V_Kisi>().ToView("Insanlar").HasNoKey();//database de oluşturulan view bu şekilde tanıtılır.
+            modelBuilder.Entity<V_Kisi>().ToView("Insanlar").HasNoKey();//database de oluşturulan view bu şekilde tanıtılırPrimary key view da belirtilmediği için HasNoKey() dendi.
+            modelBuilder.Entity<V_KisiVeAdresDefteriTablosu>().ToView("KisiVeAdresDefteriTablosu");
             base.OnModelCreating(modelBuilder); 
         }
 

@@ -24,13 +24,21 @@ namespace API.Controllers
         {
             return Json(db.AdresDefterleri.Where(x => x.IsActive == true).ToList());
         }
+        [HttpGet("KisiVeAdresDefteriTablosu")]
+        public IActionResult KisiVeAdresDefteriTablosu()
+        {
+            return Json(db.KisiVeAdresDefteriTablosu.Where(x => x.IsActive == true).ToList());
+        }
 
         [HttpGet("Get/{id}")]
         public IActionResult Get(int id)
         {
             return Json(db.AdresDefterleri.Find(id));
         }
-
+        /// <summary>
+        /// Kişilerin id lerini getiren metot tur.Şuan kullanılmıyor.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("GetirList")]
         public IActionResult GetirList()
         {
@@ -38,12 +46,15 @@ namespace API.Controllers
             return Json(db.AdresDefterleri.Where(x => x.IsActive == true).Select(x => x.KisiId).ToList());
 
         }
+        /// <summary>
+        /// Şu an kullanılmıyor.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
         [HttpGet("VInsanlarList/{id}")]
         public IActionResult VInsanlarList(int id)
         {
-            //List<V_Kisi> a = db.Insanlar.Where(x => x.KisiId == id).ToList();
-            //return Json(a);
             return Json(db.Insanlar.Where(x => x.KisiId == id).ToList());
 
         }
