@@ -235,7 +235,6 @@
             yas = $("#Yas").val();
             const kisi = new Kisi(id, ad, soyad, yas);
             Update(kisi);
-            //$('#modalTable').modal('close');
         });
 
     };
@@ -303,7 +302,7 @@
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (result) {
-                console.log(result);
+                alert("Güncelleme Yapıldı");
                 window.location.reload();
             },
             error: function (err) {

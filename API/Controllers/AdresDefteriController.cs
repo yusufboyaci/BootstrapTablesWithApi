@@ -24,6 +24,7 @@ namespace API.Controllers
         {
             return Json(db.AdresDefterleri.Where(x => x.IsActive == true).ToList());
         }
+
         /// <summary>
         /// Adres defteri tablosunu kişi ad ve soyadını getiren metottur.
         /// </summary>
@@ -39,6 +40,7 @@ namespace API.Controllers
         {
             return Json(db.AdresDefterleri.Find(id));
         }
+
         /// <summary>
         /// Kişilerin id lerini getiren metot tur.Şuan kullanılmıyor.
         /// </summary>
@@ -46,21 +48,18 @@ namespace API.Controllers
         [HttpGet("GetirList")]
         public IActionResult GetirList()
         {
-
             return Json(db.AdresDefterleri.Where(x => x.IsActive == true).Select(x => x.KisiId).ToList());
-
         }
+
         /// <summary>
         ///Kişilerin ad ve soyadını id si ile getiren metottru. Şu an kullanılmıyor.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-
         [HttpGet("VInsanlarList/{id}")]
         public IActionResult VInsanlarList(int id)
         {
             return Json(db.Insanlar.Where(x => x.KisiId == id).ToList());
-
         }
 
         [HttpPost("Post")]
