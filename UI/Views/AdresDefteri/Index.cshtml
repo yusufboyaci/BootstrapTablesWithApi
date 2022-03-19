@@ -66,7 +66,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Kişiler</label>
-                        <select name="kisiId" id="" class="form-control kisiId">
+                        <select name="kisiId" id="kisiId" class="form-control">
                         </select>
                         <span class="text-danger"></span>
                     </div>
@@ -109,7 +109,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Kişiler</label>
-                        <select name="kisiId" id="" class="form-control kisiId">
+                        <select name="adSoyad" id="kisiDeger" class="form-control">
                         </select>
                         <span class="text-danger"></span>
                     </div>
@@ -129,6 +129,8 @@
 
 <script>
 
+   
+
     let table = $("#table");
     List();
 
@@ -137,9 +139,7 @@
         $('#btnEkle').click(function (e) {
             KisiListesi();
         });
-        $('#btnGuncelle').click(function (e) {
-            KisiListesi();
-        });
+   
 
 
 
@@ -166,7 +166,7 @@
 
     function KisiListesi() {
         let _url = "https://localhost:44353/api/Kisi/Get";
-        $(".kisiId").empty();
+        $("#kisiId").empty();
         $.ajax({
             url: _url,
             type: 'GET',
@@ -175,7 +175,44 @@
             success: function (list) {
 
                 for (var i = 0; i < list.length; i++) {
-                    $('.kisiId').append(
+                  
+                        $('#kisiId').append(
+                            `
+                            <option value="${list[i].id}">${list[i].ad} ${list[i].soyad}</option>
+                   `
+                        );   
+                }
+
+            },
+            error: function (err) {
+                console.log(err);
+                alert("HATA VAR");
+            }
+        });
+    };
+
+
+    function KisiListesiGuncellemeIcin() {
+        //let _url = "https://localhost:44353/api/AdresDefteri/KisiVeAdresDefteriTablosu";
+        let _url = "https://localhost:44353/api/Kisi/Get";
+        $("#kisiDeger").empty();
+        $.ajax({
+            url: _url,
+            type: 'GET',
+            dataType: 'json',
+            async: false,
+            success: function (list) {
+                for (var i = 0; i < list.length; i++) {
+                    console.log(list[i].adSoyad)
+
+                   // $('#kisiDeger').append(
+                   //     `
+                   //         <option value="${list[i].kisiId}">${list[i].adSoyad}</option>
+                   //`
+                   // );
+
+
+                    $('#kisiDeger').append(
                         `
                             <option value="${list[i].id}">${list[i].ad} ${list[i].soyad}</option>
                    `
@@ -188,8 +225,8 @@
                 alert("HATA VAR");
             }
         });
-
     };
+
 
     function Add() {
         let frm = $("#form");
@@ -221,7 +258,6 @@
             dataType: 'json',
             async: false,
             success: function (liste) {
-                console.log(liste);
                 table.bootstrapTable('load', liste);
                 table.bootstrapTable(
                     {
@@ -243,9 +279,10 @@
         }
     };
     function silGuncelle(value, row, index) {
+
         return [
             `<button class="btn btn-danger sil" onclick="Sil(${row.id})"><i class="fa fa-trash"></i> </button>`,
-            '<button id="btnGuncelle" class="btn btn-info type="button" data-toggle="modal" data-target="#modalTableGuncelle" onclick="UpdateButton(\'' + row.id + '\',\'' + row.adres + '\',\'' + row.mail + '\',\'' + row.konum + '\',\'' + row.kisiId + '\')"><i class="fa fa-edit"></i> </button>'
+            '<button id="btnGuncelle" class="btn btn-info type="button" data-toggle="modal" data-target="#modalTableGuncelle" onclick="UpdateButton(\'' + row.id + '\',\'' + row.adres + '\',\'' + row.mail + '\',\'' + row.konum + '\',\'' + row.kisiId + '\',\'' + row.adSoyad + '\')"><i class="fa fa-edit"></i> </button>'
         ].join('');
     };
 
@@ -295,22 +332,24 @@
             }
         });
     };
-    function AdresDefteri(id, adres, mail, konum, kisiId) {
+    function AdresDefteri(id, adres, mail, konum, kisiId, adSoyad) {
         this.id = id;
         this.adres = adres;
         this.mail = mail;
         this.konum = konum;
         this.kisiId = kisiId;
+        this.adSoyad = adSoyad;
     };
-    function UpdateButton(id, adres, mail, konum, kisiId) {
+    function UpdateButton(id, adres, mail, konum, adSoyad,kisiId) {
         Edit(id);
-        KisiListesi();
+        KisiListesiGuncellemeIcin();
         $('#update').click(function () {
             adres = $('#AdresGuncelle').val();
             mail = $('#MailGuncelle').val();
             konum = $('#KonumGuncelle').val();
-            kisiId = $('.kisiId').val();
-            const adresDefteri = new AdresDefteri(id, adres, mail, konum, kisiId);
+            adSoyad = $('#kisiDeger option').val();
+            kisiId = $('#kisiDeger').val();
+            const adresDefteri = new AdresDefteri(id, adres, mail, konum, kisiId, adSoyad);
             Update(adresDefteri);
         });
     };
@@ -336,35 +375,10 @@
         });
     };
 
+    $('#table').on('check.bs.table', function (e, row) {//Bootsrapt table da tıklanan satırın idi sini verir.
 
-
-    //function GetirKisi(id) {
-    //    let _url = "https://localhost:44353/api/Kisi/Get/" + id;
-    //    //$("#kisiId").empty();
-    //    $.ajax({
-    //        url: _url,
-    //        type: 'GET',
-    //        dataType: 'json',
-    //        async: false,
-    //        success: function (nesne) {
-
-               
-    //                $('#kisiIdGuncelle').append(
-    //                    `
-    //                        <option value="${list[i].id}">${list[i].ad} ${list[i].soyad}</option>
-    //               `
-    //                );
-                
-
-    //        },
-    //        error: function (err) {
-    //            console.log(err);
-    //            alert("HATA VAR");
-    //        }
-    //    });
-
-    //};
-
+       // console.log(row.id);
+    });
 
     function Edit(id) {/*combobox lar dolu olsun diye yazıldı*/
         $.ajax({
@@ -379,7 +393,8 @@
                 $('#AdresGuncelle').val(result.adres);
                 $('#MailGuncelle').val(result.mail);
                 $('#KonumGuncelle').val(result.konum);
-                $('.kisiId').val(result.kisiId);
+                $('#kisiDeger').val(result.kisiId);
+                $('#kisiDeger option').val(result.ad + " " + result.soyad);
             },
             error: function (err) {
                 console.log(err);

@@ -29,8 +29,7 @@ namespace API.Controllers
         [HttpGet("Get/{id}")]
         public IActionResult Get(int Id)
         {
-            var cevap = db.Kisiler.Find(Id);
-            return Json(cevap);
+            return Json(db.Kisiler.Find(Id));
         }
 
         [HttpPost("Post")]
