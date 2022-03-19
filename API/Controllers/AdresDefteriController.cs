@@ -38,7 +38,7 @@ namespace API.Controllers
         [HttpGet("Get/{id}")]
         public IActionResult Get(int id)
         {
-            return Json(db.AdresDefterleri.Find(id));
+            return Json(db.KisiVeAdresDefteriTablosu.Find(id));
         }
 
         /// <summary>
