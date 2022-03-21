@@ -13,7 +13,11 @@ namespace UI.Controllers
         public IActionResult Login() => View();
         [HttpPost]
         public IActionResult Login(int id)
-        {           
+        {
+            if (id == 0)
+            {
+                throw new Exception("Kullanıcı adınız ve şifreniz hatalıdır ");
+            }
             return RedirectToAction("Index","Kisi");
         }
     }
