@@ -4,14 +4,16 @@ using API.Models.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220321112453_5")]
+    partial class _5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,6 +89,9 @@ namespace API.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("KisiId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Password")
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
@@ -96,6 +101,8 @@ namespace API.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("KisiId");
 
                     b.ToTable("Loginler");
                 });
@@ -151,9 +158,18 @@ namespace API.Migrations
                     b.Navigation("Kisi");
                 });
 
+            modelBuilder.Entity("API.Models.Entities.Concrete.Login", b =>
+                {
+                    b.HasOne("API.Models.Entities.Concrete.Kisi", null)
+                        .WithMany("Loginler")
+                        .HasForeignKey("KisiId");
+                });
+
             modelBuilder.Entity("API.Models.Entities.Concrete.Kisi", b =>
                 {
                     b.Navigation("AdresDefterleri");
+
+                    b.Navigation("Loginler");
                 });
 #pragma warning restore 612, 618
         }

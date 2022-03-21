@@ -18,12 +18,15 @@ namespace API.Controllers
         {
             db = context;
         }
-        [HttpGet("Get")]
-        public IActionResult Get()
+        
+        [HttpGet("Login")]
+        public IActionResult Login(string username, string password)
         {
-            List<Login> loginler = db.Loginler.Where(x => x.IsActive == true).ToList();
-            return Json(loginler);
+            List<Login> loginler = db.Loginler.Where(x => x.IsActive == true || x.Username == username || x.Password == password).ToList();
+            Login kullanici = loginler.FirstOrDefault();
+            return Json(kullanici);
         }
+
         [HttpGet("Get/{id}")]
         public IActionResult Get(int id)
         {
@@ -57,5 +60,6 @@ namespace API.Controllers
             db.SaveChanges();
             return Json("Kayit Silindi");
         }
+
     }
 }

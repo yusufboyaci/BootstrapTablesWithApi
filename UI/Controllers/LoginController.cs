@@ -8,26 +8,13 @@ using UI.Models;
 namespace UI.Controllers
 {
     public class LoginController : Controller
-    {
-
-        private bool LoginUser(string username, string password)
-        {
-
-            return true;
-        }
-       
-        [HttpGet]
-        public IActionResult Index()
-        {
+    {       
+        public IActionResult Login()
+        {           
             return View();
         }
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginVM nesne)
+        public IActionResult Login2()
         {
-            if (LoginUser(nesne.Username,nesne.Password))
-            {
-                return View();
-            }
             return View();
         }
     }
