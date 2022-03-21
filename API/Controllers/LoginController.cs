@@ -22,8 +22,7 @@ namespace API.Controllers
         [HttpGet("Login")]
         public IActionResult Login(string username, string password)
         {
-            List<Login> loginler = db.Loginler.Where(x => x.IsActive == true || x.Username == username || x.Password == password).ToList();
-            Login kullanici = loginler.FirstOrDefault();
+            Login kullanici = db.Loginler.FirstOrDefault(x => x.IsActive == true && x.Username == username && x.Password == password);
             return Json(kullanici);
         }
 

@@ -111,15 +111,17 @@
                 success: function (kullanici) {
                     console.log(kullanici);
                     if (kullanici != "") {
+
                         KullaniciPost(kullanici);
-                        alert("Giriş Başarılı");
+
                     } else {
+
                         alert("Hata oluştu. Bilgilerinizi kontrol ederek tekrar deneyiniz!");
                     }
                 },
                 error: function (err) {
                     console.log(err);
-                    alert("Hata");
+                    alert("Sistemde Hata meydana geldi.");
                 }
             });
         });
@@ -137,8 +139,9 @@
             success: function () {
 
             },
-            error: function () {
-
+            error: function (err) {
+                console.log(err);
+                alert("Sistemde Hata meydana geldi.");
             }
         })
 
