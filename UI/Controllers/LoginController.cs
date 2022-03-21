@@ -8,14 +8,13 @@ using UI.Models;
 namespace UI.Controllers
 {
     public class LoginController : Controller
-    {       
-        public IActionResult Login()
+    {
+        [HttpGet]
+        public IActionResult Login() => View();
+        [HttpPost]
+        public IActionResult Login(int id)
         {           
-            return View();
-        }
-        public IActionResult Login2()
-        {
-            return View();
+            return RedirectToAction("Index","Kisi");
         }
     }
 }

@@ -80,7 +80,7 @@
 
 
 
-<script type="text/javascript">
+<script>
     $(document).ready(function () {
 
         $('#add').click(function () {
@@ -98,17 +98,20 @@
             }
 
             let _url = "https://localhost:44353/api/Login/Login";
-            let veri = { username: username, password: password };
+
+            let _data = { username: username, password: password };
+
             $.ajax({
                 url: _url,
                 type: 'GET',
-                data: veri,
+                data: _data,
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 async: false,
                 success: function (kullanici) {
                     console.log(kullanici);
                     if (kullanici != "") {
+                        KullaniciPost(kullanici);
                         alert("Giriş Başarılı");
                     } else {
                         alert("Hata oluştu. Bilgilerinizi kontrol ederek tekrar deneyiniz!");
@@ -122,7 +125,24 @@
         });
     });
 
+    function KullaniciPost(kullanici) {
+        let url = "/Login/Login";
+        $.ajax({
+            url: _url,
+            type: 'POST',
+            data: { id: kullanici.id },
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            async: false,
+            success: function () {
 
+            },
+            error: function () {
+
+            }
+        })
+
+    };
 
     function Add() {
         let frm = $("#form");
