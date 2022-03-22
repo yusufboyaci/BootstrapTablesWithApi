@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using UI.Models;
 
@@ -12,13 +13,17 @@ namespace UI.Controllers
         [HttpGet]
         public IActionResult Login() => View();
         [HttpPost]
-        public IActionResult Login(int id)
+        public IActionResult Login(LoginVM nesne)
         {
-            if (id == 0)
-            {
-                throw new Exception("Kullanıcı adınız ve şifreniz hatalıdır ");
-            }
-            return RedirectToAction("Index","Kisi");
+            //List<Claim> claims = new List<Claim>
+            //{
+            //    new Claim(ClaimTypes.Name,nesne.Username)
+            //};
+            //ClaimsIdentity userIdentity = new ClaimsIdentity(claims, "login");
+            //ClaimsPrincipal userPrincipal = new ClaimsIdentity(userIdentity);
+
+           // return RedirectToAction("Index", "Kisi");
+            return Json(nesne);
         }
     }
 }

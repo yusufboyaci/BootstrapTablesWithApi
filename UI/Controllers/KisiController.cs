@@ -24,9 +24,5 @@ namespace UI.Controllers
             return View();
         }
      
-        public IActionResult Deneme()
-        {
-            return View();
-        }
     }
 }

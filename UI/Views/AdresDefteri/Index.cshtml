@@ -193,7 +193,6 @@
 
 
     function KisiListesiGuncellemeIcin() {
-        //let _url = "https://localhost:44353/api/AdresDefteri/KisiVeAdresDefteriTablosu";
         let _url = "https://localhost:44353/api/Kisi/Get";
         $("#kisiDeger").empty();
         $.ajax({
@@ -205,12 +204,7 @@
                 for (var i = 0; i < list.length; i++) {
                     console.log(list[i].adSoyad)
 
-                   // $('#kisiDeger').append(
-                   //     `
-                   //         <option value="${list[i].kisiId}">${list[i].adSoyad}</option>
-                   //`
-                   // );
-
+             
 
                     $('#kisiDeger').append(
                         `

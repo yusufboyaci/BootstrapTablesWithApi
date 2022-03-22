@@ -23,10 +23,7 @@ namespace API.Controllers
         public IActionResult Login(string username, string password)
         {
             Login kullanici = db.Loginler.FirstOrDefault(x => x.IsActive == true && x.Username == username && x.Password == password);
-            if (kullanici == null)
-            {
-                return BadRequest();
-            }
+            
             return Json(kullanici);
         }
 

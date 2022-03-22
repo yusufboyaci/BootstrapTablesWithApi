@@ -51,6 +51,8 @@ namespace API
             app.UseHttpsRedirection();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());//Cors hatasý alamamk için eklenir.
 
+
+
             app.UseRouting();
 
             app.UseAuthorization();

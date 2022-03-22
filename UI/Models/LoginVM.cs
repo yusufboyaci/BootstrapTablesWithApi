@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace UI.Models
 {
-    public class LoginVM
+    public class LoginVM : BaseVM
     {
-        [Display(Name ="Kullanıcı Adı")]
+        [Display(Name = "Kullanıcı Adı")]
         public string Username { get; set; }
         [Display(Name = "Şifre")]
         public string Password { get; set; }
