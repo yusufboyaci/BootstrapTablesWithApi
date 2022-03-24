@@ -22,7 +22,7 @@ namespace API.Models.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<V_Kisi>().ToView("Insanlar").HasNoKey();//database de oluşturulan view bu şekilde tanıtılırPrimary key view da belirtilmediği için HasNoKey() dendi.
+            modelBuilder.Entity<V_Kisi>().ToView("Insanlar").HasNoKey();//database de oluşturulan view bu şekilde tanıtılır.Primary key view da belirtilmediği için HasNoKey() dendi.
             modelBuilder.Entity<V_KisiVeAdresDefteriTablosu>().ToView("KisiVeAdresDefteriTablosu");
             base.OnModelCreating(modelBuilder); 
         }
