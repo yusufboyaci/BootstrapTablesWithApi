@@ -1,20 +1,21 @@
-﻿@{
+﻿
+@{
     ViewData["Title"] = "Login";
 }
 
 <div>
-    <input type="hidden" id="ApiResponse" />
+    <input type="hidden" id="ApiResponse"/>
 </div>
 
 <form method="post">
     <h1> LoginTitle</h1>
     <br />
     <div>
-        <input id="username-login"  type="text" class="form-control" placeholder="Kullanıcı Adınız..." required />
+        <input id="username-login" type="text" class="form-control" placeholder="Kullanıcı Adınız..." required />
     </div>
     <br />
     <div>
-        <input id="password-login"  type="password" class="form-control" placeholder="Şifreniz..." required />
+        <input id="password-login" type="password" class="form-control" placeholder="Şifreniz..." required />
     </div>
     <div>
         <br />
@@ -84,7 +85,7 @@
 
 <script>
     $(document).ready(function () {
-        
+
 
         $('#add').click(function () {
             Add();
@@ -104,12 +105,21 @@
             let data = { username: username, password: password };
             KullaniciGet(data);
 
-            let data1 = $("#ApiResponse").val();
-            console.log(data1);
-            KullaniciPost(data1);
+            let apiDenGelenKullanici = $("#ApiResponse").val();
+
+
+
+            if (apiDenGelenKullanici != null) {
+
+                sessionStorage.setItem('apiDenGelenKullaniciId', apiDenGelenKullanici.id);
+
+            }
           
+
         });
     });
+
+
 
 
 
@@ -128,47 +138,51 @@
             async: false,
             success: function (kullanici) {
                 if (kullanici != null) {
+                    let veri = JSON.stringify(kullanici);
+                    $("#ApiResponse").val(veri);
 
-                    $("#ApiResponse").val(kullanici);
-                    return true;
 
                 } else {
 
                     alert("Hata oluştu. Bilgilerinizi kontrol ederek tekrar deneyiniz!");
-                    return false;
+                    //window.location.href = "https://localhost:44368/";
+
                 }
             },
             error: function (err) {
                 console.log(err);
                 alert("Sistemde Hata meydana geldi.");
-                return false;
+
             }
         });
     };
 
-    function KullaniciPost(kullanici) {
-        let _url = "https://localhost:44368/Login/Login";
-        let _data = JSON.stringify(kullanici);
-        console.log(kullanici);
-        $.ajax({
-            url: _url,
-            type: 'POST',
-            data: _data,
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            async: false,
-            success: function () {
+    //function KullaniciPost(apiDenGelenKullanici) {
+    //    let _url = "https://localhost:44368/Access/Access";
+    //    //let _url = "/Access/Access";
 
-            },
-            error: function (err) {
-                console.log(err);
-                alert("Sistemde Hata meydana geldi.");
-            }
-        })
+    //    $.ajax({
+    //        url: _url,
+    //        type: 'POST',
+    //        data: { nesne: apiDenGelenKullanici },
+    //        contentType: 'application/json; charset=utf-8',
+    //        dataType: 'json',
+    //        async: false,
+    //        success: function (nesne) {
+    //            if (nesne != null) {
 
-    };
+    //            }
+    //            console.log(nesne);
+    //        },
+    //        error: function (err) {
+    //            console.log(err);
+    //            alert("Sistemde Hata meydana geldi.");
+    //        }
+    //    });
 
-  
+    //};
+
+
 
     function Add() {
         let frm = $("#form");

@@ -15,6 +15,7 @@ namespace UI.Controllers
         [HttpPost]
         public IActionResult Login(LoginVM nesne)
         {
+
             //List<Claim> claims = new List<Claim>
             //{
             //    new Claim(ClaimTypes.Name,nesne.Username)
@@ -22,8 +23,7 @@ namespace UI.Controllers
             //ClaimsIdentity userIdentity = new ClaimsIdentity(claims, "login");
             //ClaimsPrincipal userPrincipal = new ClaimsIdentity(userIdentity);
 
-           // return RedirectToAction("Index", "Kisi");
-            return Json(nesne);
+            return RedirectToAction("Index", "Kisi");
         }
     }
 }
