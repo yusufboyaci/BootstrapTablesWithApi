@@ -2,7 +2,45 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row">
+    <div class="col-md-6">
+        <button id="btnLogin" class="btn btn-outline-success" >Login</button>
+    </div>
 </div>
+
+@*Modal *@
+<div id="loginModal" title="Giriş">
+    <form method="post">
+        <div class="form-group">
+           
+            <input type="text" class="form-control" placeholder="kullanıcı adınızı giriniz...">
+        </div>
+        <div class="form-group">          
+            <input type="password" class="form-control" id="password" placeholder="Şifre">
+        </div>
+        <button type="submit" class="btn btn-primary">Giriş</button>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+        loginModal();
+    });
+    function loginModal() {
+        $('#loginModal').dialog({
+            autoOpen: false,
+            title: 'Kullanıcı Giriş',
+            show: {
+                effect: "blind",
+                duration: 1000,
+            },
+            hide: {
+                effect: "blind",
+                duration: 1000,
+            }
+        });
+        $('#btnLogin').click(function () {
+            $('#loginModal').dialog("open");
+        });
+    };
+</script>

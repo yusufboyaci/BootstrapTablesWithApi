@@ -76,13 +76,6 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
 <script>
     $(document).ready(function () {
 
@@ -110,22 +103,12 @@
 
 
             if (apiDenGelenKullanici != null) {
-
                 sessionStorage.setItem('apiDenGelenKullaniciId', apiDenGelenKullanici.id);
-
             }
           
 
         });
     });
-
-
-
-
-
-
-
-
     function KullaniciGet(_data) {
         let _url = "https://localhost:44353/api/Login/Login";
 
@@ -145,7 +128,6 @@
                 } else {
 
                     alert("Hata oluştu. Bilgilerinizi kontrol ederek tekrar deneyiniz!");
-                    //window.location.href = "https://localhost:44368/";
 
                 }
             },
@@ -157,33 +139,29 @@
         });
     };
 
-    //function KullaniciPost(apiDenGelenKullanici) {
-    //    let _url = "https://localhost:44368/Access/Access";
-    //    //let _url = "/Access/Access";
+    function KullaniciPost(apiDenGelenKullanici) {
+        //let _url = "https://localhost:44368/Access/Access";
+        let _url = "/Access/Access";
 
-    //    $.ajax({
-    //        url: _url,
-    //        type: 'POST',
-    //        data: { nesne: apiDenGelenKullanici },
-    //        contentType: 'application/json; charset=utf-8',
-    //        dataType: 'json',
-    //        async: false,
-    //        success: function (nesne) {
-    //            if (nesne != null) {
+        $.ajax({
+            url: _url,
+            type: 'POST',
+            data: { nesne: apiDenGelenKullanici },
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            async: false,
+            success: function (nesne) {
+                if (nesne != null) {
 
-    //            }
-    //            console.log(nesne);
-    //        },
-    //        error: function (err) {
-    //            console.log(err);
-    //            alert("Sistemde Hata meydana geldi.");
-    //        }
-    //    });
-
-    //};
-
-
-
+                }
+                console.log(nesne);
+            },
+            error: function (err) {
+                console.log(err);
+                alert("Sistemde Hata meydana geldi.");
+            }
+        });
+    };
     function Add() {
         let frm = $("#form");
         let _data = JSON.stringify(frm.serializeJSON());

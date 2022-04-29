@@ -60,6 +60,5 @@ namespace API.Controllers
             db.SaveChanges();
             return Json("Kayit Silindi");
         }
-
     }
 }
