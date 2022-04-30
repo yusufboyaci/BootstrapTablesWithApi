@@ -3,9 +3,6 @@
     ViewData["Title"] = "Login";
 }
 
-<div>
-    <input type="hidden" id="ApiResponse"/>
-</div>
 
 <form method="post">
     <h1> LoginTitle</h1>
@@ -77,6 +74,8 @@
     </div>
 </div>
 <script>
+const { json } = require("stream/consumers");
+
     $(document).ready(function () {
 
 
@@ -96,17 +95,8 @@
 
 
             let data = { username: username, password: password };
-            KullaniciGet(data);
-
-            let apiDenGelenKullanici = $("#ApiResponse").val();
-
-
-
-            if (apiDenGelenKullanici != null) {
-                sessionStorage.setItem('apiDenGelenKullaniciId', apiDenGelenKullanici.id);
-            }
-          
-
+            let sonData = JSON.stringify(data);
+            KullaniciGet(sonData);        
         });
     });
     function KullaniciGet(_data) {
@@ -114,16 +104,19 @@
 
         $.ajax({
             url: _url,
-            type: 'GET',
+            type: 'POST',
             data: _data,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             async: false,
-            success: function (kullanici) {
-                if (kullanici != null) {
-                    let veri = JSON.stringify(kullanici);
-                    $("#ApiResponse").val(veri);
-
+            success: function (result) {
+                if (result != null) {
+                    if (result == true) {
+                        window.location.href = '/Kisi/Index'
+                    }
+                    else {
+                        window.location.reload();
+                    }                  
 
                 } else {
 
@@ -139,29 +132,29 @@
         });
     };
 
-    function KullaniciPost(apiDenGelenKullanici) {
-        //let _url = "https://localhost:44368/Access/Access";
-        let _url = "/Access/Access";
+    //function KullaniciPost(apiDenGelenKullanici) {
+    //    //let _url = "https://localhost:44368/Access/Access";
+    //    let _url = "/Access/Access";
 
-        $.ajax({
-            url: _url,
-            type: 'POST',
-            data: { nesne: apiDenGelenKullanici },
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            async: false,
-            success: function (nesne) {
-                if (nesne != null) {
+    //    $.ajax({
+    //        url: _url,
+    //        type: 'POST',
+    //        data: { nesne: apiDenGelenKullanici },
+    //        contentType: 'application/json; charset=utf-8',
+    //        dataType: 'json',
+    //        async: false,
+    //        success: function (nesne) {
+    //            if (nesne != null) {
 
-                }
-                console.log(nesne);
-            },
-            error: function (err) {
-                console.log(err);
-                alert("Sistemde Hata meydana geldi.");
-            }
-        });
-    };
+    //            }
+    //            console.log(nesne);
+    //        },
+    //        error: function (err) {
+    //            console.log(err);
+    //            alert("Sistemde Hata meydana geldi.");
+    //        }
+    //    });
+    //};
     function Add() {
         let frm = $("#form");
         let _data = JSON.stringify(frm.serializeJSON());

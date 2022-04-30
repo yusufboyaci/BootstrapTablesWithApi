@@ -27,17 +27,17 @@ namespace UI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null).AddViewOptions(options => options.HtmlHelperOptions.ClientValidationEnabled = true).AddNewtonsoftJson(opt => opt.SerializerSettings.ContractResolver = new DefaultContractResolver()).AddRazorRuntimeCompilation();
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(o =>
-            {
-                o.Cookie.Name = "AboneCookie";
-                o.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-                o.Cookie.HttpOnly = true;
-                o.LoginPath = "/Account/Login";
-                o.LogoutPath = "/Home/Index";
-                o.AccessDeniedPath = "/Home/Index";
-            });
-            services.AddDistributedMemoryCache();
-            services.AddSession();
+            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(o =>
+            //{
+            //    o.Cookie.Name = "AboneCookie";
+            //    o.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+            //    o.Cookie.HttpOnly = true;
+            //    o.LoginPath = "/Account/Login";
+            //    o.LogoutPath = "/Home/Index";
+            //    o.AccessDeniedPath = "/Home/Index";
+            //});
+            //services.AddDistributedMemoryCache();
+            //services.AddSession();
             services.AddCors();
         }
 
