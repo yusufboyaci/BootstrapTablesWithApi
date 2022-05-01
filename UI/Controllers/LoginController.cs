@@ -12,11 +12,11 @@ namespace UI.Controllers
     {
         [HttpGet]
         public IActionResult Login() => View();
-        [HttpPost]
-        public IActionResult Login(LoginVM nesne)
-        {
+        //[HttpPost]
+        //public IActionResult Login(LoginVM nesne)
+        //{
 
-            return RedirectToAction("Index", "Kisi");
-        }
+        //    return RedirectToAction("Index", "Kisi");
+        //}
     }
 }

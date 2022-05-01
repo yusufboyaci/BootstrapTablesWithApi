@@ -4,7 +4,7 @@
 }
 
 
-<form method="post">
+<form>
     <h1> LoginTitle</h1>
     <br />
     <div>
@@ -74,7 +74,6 @@
     </div>
 </div>
 <script>
-const { json } = require("stream/consumers");
 
     $(document).ready(function () {
 
@@ -92,14 +91,11 @@ const { json } = require("stream/consumers");
                 alert("Lütfen kullanıcı adı ve şifnerinizi boş geçmeyiniz!");
                 return;
             }
-
-
-            let data = { username: username, password: password };
-            let sonData = JSON.stringify(data);
-            KullaniciGet(sonData);        
+            let data = JSON.stringify({ username: username, password: password });
+            Login(data);
         });
     });
-    function KullaniciGet(_data) {
+    function Login(_data) {
         let _url = "https://localhost:44353/api/Login/Login";
 
         $.ajax({
@@ -112,9 +108,10 @@ const { json } = require("stream/consumers");
             success: function (result) {
                 if (result != null) {
                     if (result == true) {
-                        window.location.href = '/Kisi/Index'
+                        //window.open('/Kisi/Index');
+                        window.location.href = "https://localhost:44368/Kisi";
                     }
-                    else {
+                    else if( result == false) {
                         window.location.reload();
                     }                  
 
@@ -132,29 +129,28 @@ const { json } = require("stream/consumers");
         });
     };
 
-    //function KullaniciPost(apiDenGelenKullanici) {
-    //    //let _url = "https://localhost:44368/Access/Access";
-    //    let _url = "/Access/Access";
+    function Logout(_data) {
+        let _url = "https://localhost:44368/Access/Access";
 
-    //    $.ajax({
-    //        url: _url,
-    //        type: 'POST',
-    //        data: { nesne: apiDenGelenKullanici },
-    //        contentType: 'application/json; charset=utf-8',
-    //        dataType: 'json',
-    //        async: false,
-    //        success: function (nesne) {
-    //            if (nesne != null) {
+        $.ajax({
+            url: _url,
+            type: 'POST',
+            data: { nesne: apiDenGelenKullanici },
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            async: false,
+            success: function (nesne) {
+                if (nesne != null) {
 
-    //            }
-    //            console.log(nesne);
-    //        },
-    //        error: function (err) {
-    //            console.log(err);
-    //            alert("Sistemde Hata meydana geldi.");
-    //        }
-    //    });
-    //};
+                }
+                console.log(nesne);
+            },
+            error: function (err) {
+                console.log(err);
+                alert("Sistemde Hata meydana geldi.");
+            }
+        });
+    };
     function Add() {
         let frm = $("#form");
         let _data = JSON.stringify(frm.serializeJSON());

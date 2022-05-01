@@ -44,10 +44,14 @@ namespace API
                 o.Cookie.Name = "AboneCookie";
                 o.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 o.Cookie.HttpOnly = true;
-                o.LoginPath = "/Account/Login";
+                o.LoginPath = "/localhost:44368/Kisi/Index";
                 o.LogoutPath = "/Home/Index";
                 o.AccessDeniedPath = "/Home/Index";
             });
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("UserOnly", policy => policy.RequireClaim("User"));
+            });//link i kopyalarak girme iþlemini engellemek için
             services.AddDistributedMemoryCache();
             services.AddSession();
         }
