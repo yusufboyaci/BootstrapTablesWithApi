@@ -263,7 +263,7 @@
                 alert('Listeleme sırasında bir hata ile karşılaşıldı.');
             }
         });
-    }
+    };
     window.operateEvents = {
         'click .sil': function (e, value, row, index) {
             table.bootstrapTable('remove', {
@@ -276,7 +276,7 @@
 
         return [
             `<button class="btn btn-danger sil" onclick="Sil(${row.id})"><i class="fa fa-trash"></i> </button>`,
-            '<button id="btnGuncelle" class="btn btn-info type="button" data-toggle="modal" data-target="#modalTableGuncelle" onclick="UpdateButton(\'' + row.id + '\',\'' + row.adres + '\',\'' + row.mail + '\',\'' + row.konum + '\',\'' + row.kisiId + '\',\'' + row.adSoyad + '\')"><i class="fa fa-edit"></i> </button>'
+            '<button id="btnGuncelle" class="btn btn-info" type="button" data-toggle="modal" data-target="#modalTableGuncelle" onclick="UpdateButton(\'' + row.id + '\',\'' + row.adres + '\',\'' + row.mail + '\',\'' + row.konum + '\',\'' + row.kisiId + '\',\'' + row.adSoyad + '\')"><i class="fa fa-edit"></i> </button>'
         ].join('');
     };
 
