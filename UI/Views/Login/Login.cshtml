@@ -82,7 +82,6 @@
             Add();
         });
 
-
         $("#btnLogin").click(function () {
             let username = $("#username-login").val();
             let password = $("#password-login").val();
@@ -95,6 +94,7 @@
             Login(data);
         });
     });
+
     function Login(_data) {
         let _url = "https://localhost:44353/api/Login/Login";
 

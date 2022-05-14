@@ -37,23 +37,7 @@ namespace API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
-            });
-
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(o =>
-            {
-                o.Cookie.Name = "AboneCookie";
-                o.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-                o.Cookie.HttpOnly = true;
-                o.LoginPath = "/localhost:44368/Kisi/Index";
-                o.LogoutPath = "/Home/Index";
-                o.AccessDeniedPath = "/Home/Index";
-            });
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("UserOnly", policy => policy.RequireClaim("User"));
-            });//link i kopyalarak girme iþlemini engellemek için
-            services.AddDistributedMemoryCache();
-            services.AddSession();
+            });           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
